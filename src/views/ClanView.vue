@@ -236,6 +236,7 @@
 </template>
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import api from '../utils/axios';
 import axios from 'axios'
 const clan = ref(null)
 const loading = ref(true)
@@ -244,7 +245,7 @@ onMounted(async () => {
   try {
     const tag = "#2PYCUY8RG"
     const encodedTag = encodeURIComponent(tag)  // "%232PYCUY8RG"
-    const res = await axios.get(`http://localhost:5000/api/clan/${encodedTag}`)
+    const res = await api.get(`/api/clan/%232PYCUY8RG`);
     clan.value = res.data
   } catch (err) {
     error.value = true

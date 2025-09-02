@@ -199,7 +199,7 @@ const loading = ref(true)
 const error = ref(false)
 onMounted(async () => {
   try {
-    const res = await axios.get(`http://localhost:5000/api/player/${tag}`)
+const res = await axios.get(`http://145.241.184.179:5000/api/player/${tag}`)
     player.value = res.data
   } catch (err) {
     console.error('Error loading player:', err)
