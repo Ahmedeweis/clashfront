@@ -243,16 +243,16 @@ const loading = ref(true)
 const error = ref(false)
 onMounted(async () => {
   try {
-    const tag = "#2PYCUY8RG"
-    const encodedTag = encodeURIComponent(tag)  // "%232PYCUY8RG"
-    const res = await api.get(`/api/clan/%232PYCUY8RG`);
-    clan.value = res.data
+    const tag = "#2PYCUY8RG";
+    const encodedTag = encodeURIComponent(tag);
+    const res = await api.get(`/api/clan/${encodedTag}`);
+    clan.value = res.data;
   } catch (err) {
-    error.value = true
+    error.value = true;
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-})
+});
 // مكون فرعي للبطاقات الصغيرة (يمكن وضعه في ملف منفصل لو تحب)
 const InfoCard = {
   props: ['title', 'value'],

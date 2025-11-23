@@ -149,9 +149,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import { useRoute } from 'vue-router'
-const route = useRoute()
-const clanTag = route.params.clanTag || ''
+const clanTag = ref("#2PYCUY8RG");
 const stats = ref([])
 const clanName = ref('')
 const totalWars = 7
@@ -177,9 +175,8 @@ function calculateAverage(wars, key) {
 }
 onMounted(async () => {
   try {
-    // جلب بيانات CWL كاملة
-    const res = await axios.get('http://localhost:5000/api/clan/cwl')
-    const cwl = res.data
+    const res = await axios.get(`http://localhost:5000/api/clan/${encodeURIComponent(clanTag.value)}/cwl`);
+    const cwl = res.data;
     // استخراج جميع warTags غير الصفرية من كل الجولات
     const warTags = cwl.rounds.flatMap(round =>
       round.warTags.filter(tag => tag !== '#0')

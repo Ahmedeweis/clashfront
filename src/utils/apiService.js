@@ -14,13 +14,12 @@ export const getClan = (tag) => {
 };
 // جلب بيانات لاعب
 export const getPlayer = (tag) => {
-  const encodedTag = encodeURIComponent(tag);
-  return api.get(`/api/player/${encodedTag}`);
+  return api.get(`/api/player/${tag.replace('#', '')}`);
 };
-// CWL League Group
-export const getCWL = () => {
-  return api.get(`/api/clan/cwl`);
-};
+// جلب CWL League Group لكلان ثابت أو ممرر
+export const getCWL = (clanTag = '2PYCUY8RG') => {
+  return api.get(`/api/clan/${clanTag}/cwl`)
+}
 // CWL War by Tag
 export const getCWLWar = (tag) => {
   const encodedTag = encodeURIComponent(tag);

@@ -70,9 +70,12 @@
       : `linear-gradient(135deg, #c084fc ${eq.level/eq.maxLevel*100}%, #7e22ce 100%)`
 }">
           <!-- Level Badge -->
-          <span class="absolute bottom-2 left-1 bg-black text-white text-[10px] font-bold px-1 py-[1px] rounded-[5px] shadow">
-            {{ eq.level }}
-          </span>
+<span
+  class="absolute bottom-2 left-1 text-white text-[10px] font-bold px-1 py-[1px] rounded-[5px] shadow"
+  :class="eq.level === eq.maxLevel ? 'bg-yellow-500 text-black' : 'bg-black text-white'"
+>
+  {{ eq.level }}
+</span>
           <!-- Equipment Image -->
           <img :src="getHeroEquipmentImageUrl(eq.name) || 'https://via.placeholder.com/48/cccccc/999999?text=?'"
                :alt="eq.name"
@@ -187,19 +190,20 @@ import { heroesData } from '../utils/heroesData'
 console.log(heroesData["Barbarian King"])
 import { useRoute } from 'vue-router'
 import axios from 'axios'
+import { getPlayer } from '../utils/apiService'   // 👈 هنا نستدعيه من الـ service
 const formatNumber = (num) => {
   if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M'
   if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K'
   return num
 }
 const route = useRoute()
-const tag = route.params.tag
+const tag = route.params.tag   // 👈 ده اللي جايلك من الـ router
 const player = ref(null)
 const loading = ref(true)
 const error = ref(false)
 onMounted(async () => {
   try {
-const res = await axios.get(`http://145.241.184.179:5000/api/player/${tag}`)
+    const res = await getPlayer(tag)   // 👈 بدل axios المباشر
     player.value = res.data
   } catch (err) {
     console.error('Error loading player:', err)
