@@ -237,7 +237,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import api from '../utils/axios';
-import axios from 'axios'
+import InfoCard from '../components/InfoCard.vue';
 const clan = ref(null)
 const loading = ref(true)
 const error = ref(false)
@@ -253,16 +253,7 @@ onMounted(async () => {
     loading.value = false;
   }
 });
-// مكون فرعي للبطاقات الصغيرة (يمكن وضعه في ملف منفصل لو تحب)
-const InfoCard = {
-  props: ['title', 'value'],
-  template: `
-    <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center text-center">
-      <p class="text-gray-500 text-sm">{{ title }}</p>
-      <p class="text-2xl font-bold text-gray-900 mt-2">{{ value }}</p>
-    </div>
-  `
-}
+
 // دالة تعطي مسار صورة التاون حسب المستوى
 const getTownhallImage = (level) => {
   try {
@@ -314,8 +305,8 @@ const loadClan = async (tag) => {
   error.value = false
   try {
     // لاحظ encodeURIComponent(tag) عشان الـ # تتحول لـ %23
-    const res = await axios.get(
-      `http://localhost:5000/api/clan/${encodeURIComponent(tag)}`
+    const res = await api.get(
+      `/api/clan/${encodeURIComponent(tag)}`
     )
     clan.value = res.data
   } catch (err) {

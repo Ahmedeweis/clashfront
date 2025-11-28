@@ -10,21 +10,24 @@
 <div class="flex gap-4 justify-center my-6">
   <button
     @click="selectedColor = 'red'"
-    :class="['px-4 py-2 rounded font-bold', selectedColor === 'red' ? 'bg-red-600 text-white' : 'bg-red-200 text-black']"
+    :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'red' ? 'bg-red-600 text-white' : 'bg-red-200 text-black']"
   >
-    أحمر
+    <span>أحمر</span>
+    <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['red']?.length || 0 }}</span>
   </button>
   <button
     @click="selectedColor = 'green'"
-    :class="['px-4 py-2 rounded font-bold', selectedColor === 'green' ? 'bg-green-600 text-white' : 'bg-green-200 text-black']"
+    :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'green' ? 'bg-green-600 text-white' : 'bg-green-200 text-black']"
   >
-    أخضر
+    <span>أخضر</span>
+    <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['green']?.length || 0 }}</span>
   </button>
   <button
     @click="selectedColor = 'yellow'"
-    :class="['px-4 py-2 rounded font-bold', selectedColor === 'yellow' ? 'bg-yellow-600 text-white' : 'bg-yellow-200 text-black']"
+    :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'yellow' ? 'bg-yellow-600 text-white' : 'bg-yellow-200 text-black']"
   >
-    أصفر
+    <span>أصفر</span>
+    <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['yellow']?.length || 0 }}</span>
   </button>
 <button
   class="w-4 h-4 bg-gray-400 rounded-full"
@@ -153,7 +156,7 @@
         >
           <img :src="getTownhallImage(stat.level)" class="w-12 h-12 object-contain drop-shadow-md" />
           <div class="text-white font-semibold text-lg flex items-center gap-2">
-            تاون {{ stat.level }}
+            <!-- تاون {{ stat.level }} -->
             <span class="bg-black/40 px-2 py-0.5 rounded-lg text-yellow-300">{{ stat.count }}</span>
           </div>
         </div>
@@ -188,35 +191,55 @@ import axios from "axios"
 // ✅ دالة تحميل PDF
 const downloadPDF = () => {
   const doc = new jsPDF()
+
   // عنوان رئيسي
+  doc.setFont("Cairo-VariableFont_slnt,wght")
   doc.setFontSize(18)
-  doc.text("تقرير أعضاء الكلانات", 105, 15, { align: "center" })
-  // نعمل جدول لكل كلان
-  topClans.value.forEach((c, idx) => {
-    const members = getMembersByClan(c.tag)
-    // تجهيز البيانات للجدول
-    const tableData = members.map((m, i) => [
-      i + 1, // رقم
-      m.name, // اسم
-      m.townHallLevel, // تاون
-      m.trophies // كؤوس
-    ])
-    // العنوان قبل الجدول
-    doc.setFontSize(14)
-    doc.text(c.name, 14, 30 + idx * 80) // يتحرك لتحت مع كل جدول
-    // الجدول
-    autoTable(doc, {
-      head: [["#", "الاسم", "تاون", "🏆 كؤوس"]],
-      body: tableData,
-      startY: 35 + idx * 80,
-      theme: "grid",
-      styles: { font: "helvetica", fontSize: 10 },
-      headStyles: { fillColor: [138, 43, 226] } // بنفسجي
-    })
+  doc.text("📋  Choosen Players", 105, 15, { align: "center" })
+
+  let finalY = 30
+
+  // ترتيب جديد للأسماء
+  const groups = [
+    { key: 'red',    label: 'Fiery Wars Exllent CWL',    color: [255, 0, 0] },
+    { key: 'green',  label: 'IRAQ #2nd CWL',   color: [0, 128, 0] },
+    { key: 'yellow', label: 'Botat CWL',  color:  [0,0,0]   }
+  ]
+
+  groups.forEach(g => {
+    const players = selectedPlayers.value[g.key] || []
+    if (players.length > 0) {
+
+      // عنوان المجموعة
+      doc.setFontSize(14)
+      doc.setTextColor(g.color[0], g.color[1], g.color[2])
+      doc.text(g.label, 14, finalY)
+      doc.setTextColor(0, 0, 0)
+
+      // جدول اللاعبين
+      const tableData = players.map((m, i) => [
+        i + 1,
+        m.name,
+        m.townHallLevel
+      ])
+
+      autoTable(doc, {
+        head: [["No", "name", "Th#"]],
+        body: tableData,
+        startY: finalY + 5,
+        theme: "grid",
+        styles: { font: "Cairo-VariableFont_slnt,wght", fontStyle: "normal", halign: "right" },
+        headStyles: { fillColor: g.color, halign: "right", textColor: g.key === 'yellow' ? [0,0,0] : [255,255,255] }
+      })
+
+      finalY = doc.lastAutoTable.finalY + 15
+    }
   })
-  // حفظ الملف
-  doc.save("clans-report.pdf")
+
+  doc.save("selected-players.pdf")
 }
+
+
 const chunkMembers = (members) => {
   const result = []
   for (let i = 0; i < members.length; i += 2) {
