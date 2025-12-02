@@ -11,31 +11,26 @@ const routes = [
     name: 'PlayerDetails',
     component: () => import('../views/PlayerDetails.vue'),
   },
-    {
+  {
     path: '/ClanCWL',
     name: 'ClanCWL',
     component: () => import('../views/ClanCWL.vue'),
   },
-{
-  path: '/cwl/war/:warTag',
-  name: 'CWLWarDetails',
-  component: () => import('../views/CWLWarDetails.vue')
-},
+  {
+    path: '/cwl/war/:warTag',
+    name: 'CWLWarDetails',
+    component: () => import('../views/CWLWarDetails.vue')
+  },
   {
     path: '/clan/:clanTag/stats',
     name: 'ClanMembersStats',
     component: () => import('../views/ClanMembersStats.vue')
   },
   {
-  path: "/all-clans",
-  name: "AllClans",
-  component: () => import("../views/AllClans.vue"),
-},
-  {
-  path: "/test",
-  name: "test",
-  component: () => import("../views/test.vue"),
-}
+    path: "/all-clans",
+    name: "AllClans",
+    component: () => import("../views/AllClans.vue"),
+  }
 ]
 const router = createRouter({
   history: createWebHistory(),
