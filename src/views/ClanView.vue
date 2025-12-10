@@ -11,7 +11,7 @@
       <div v-for="c in topClans" :key="c.tag" class="cursor-pointer bg-gradient-to-tr from-purple-800 via-pink-600 to-red-500
            rounded-2xl shadow-xl p-4 flex flex-col items-center w-40 hover:scale-105
            transition-transform duration-300" @click="loadClan(c.tag)">
-        <img :src="c.badge" alt="Clan Badge" class="w-16 h-16 mb-3 drop-shadow-lg" />
+        <img src="/master.png" alt="Clan Badge" class="w-16 h-16 mb-3 drop-shadow-lg" />
         <h3 class="text-white font-bold text-center truncate">{{ c.name }}</h3>
       </div>
     </div>
@@ -68,7 +68,7 @@
           <section v-if="clan.capitalLeague" class="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500
              rounded-xl shadow-lg px-6 py-4 text-white text-center w-fit ml-auto">
             <h2 class="text-2xl font-semibold flex items-center justify-center gap-3">
-              <img src="../assets/img/master.png" alt="Capital League" class="w-10" />
+              <img src="/master.png" alt="Capital League" class="w-10" />
               {{ clan.warLeague.name }}
             </h2>
           </section>
@@ -283,23 +283,7 @@ const sortedMembers = computed(() => {
   return [...clan.value.memberList].sort((a, b) => b.townHallLevel - a.townHallLevel);
 });
 // الكلانات الأربعة الثابتة
-const topClans = ref([
-  {
-    name: "Fiery Wars",
-    tag: "#2PYCUY8RG",
-    badge: new URL("../assets/img/master.png", import.meta.url).href
-  },
-  {
-    name: "درع العراق",
-    tag: "#QL92PVUC",
-    badge: new URL("../assets/img/master.png", import.meta.url).href
-  },
-  {
-    name: "ارض النخبة",
-    tag: "#2PPCCLUQV",
-    badge: new URL("../assets/img/master.png", import.meta.url).href
-  }
-])
+import { topClans } from "../constants/clans";
 const loadClan = async (tag) => {
   loading.value = true
   error.value = false

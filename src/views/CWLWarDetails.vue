@@ -40,8 +40,14 @@
           <!-- Clan Score -->
           <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-6 shadow-2xl border-4 border-blue-400 transform hover:scale-105 transition-all">
             <div class="flex items-center gap-4 mb-4">
-              <img :src="war.clan.badgeUrls.large" alt="Clan Badge" class="w-20 h-20 rounded-full border-4 border-yellow-400 shadow-xl" />
-              <h2 class="text-2xl font-black text-white">{{ war.clan.name }}</h2>
+              <div class="relative">
+                <img :src="war.clan.badgeUrls.large" alt="Clan Badge" class="w-20 h-20 rounded-full border-4 border-yellow-400 shadow-xl" />
+                <span class="absolute -bottom-2 -right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full border-2 border-white">Lv.{{ war.clan.clanLevel }}</span>
+              </div>
+              <div>
+                <h2 class="text-2xl font-black text-white">{{ war.clan.name }}</h2>
+                <p class="text-sm text-blue-200 font-mono mt-1">{{ war.clan.tag }}</p>
+              </div>
             </div>
             <div class="space-y-3">
               <div class="bg-black bg-opacity-20 rounded-lg p-4">
@@ -62,8 +68,14 @@
           <!-- Opponent Score -->
           <div class="bg-gradient-to-br from-red-600 to-red-800 rounded-2xl p-6 shadow-2xl border-4 border-red-400 transform hover:scale-105 transition-all">
             <div class="flex items-center gap-4 mb-4">
-              <img :src="war.opponent.badgeUrls.large" alt="Opponent Badge" class="w-20 h-20 rounded-full border-4 border-yellow-400 shadow-xl" />
-              <h2 class="text-2xl font-black text-white">{{ war.opponent.name }}</h2>
+              <div class="relative">
+                <img :src="war.opponent.badgeUrls.large" alt="Opponent Badge" class="w-20 h-20 rounded-full border-4 border-yellow-400 shadow-xl" />
+                <span class="absolute -bottom-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full border-2 border-white">Lv.{{ war.opponent.clanLevel }}</span>
+              </div>
+              <div>
+                <h2 class="text-2xl font-black text-white">{{ war.opponent.name }}</h2>
+                <p class="text-sm text-red-200 font-mono mt-1">{{ war.opponent.tag }}</p>
+              </div>
             </div>
             <div class="space-y-3">
               <div class="bg-black bg-opacity-20 rounded-lg p-4">
@@ -117,7 +129,7 @@
                   <p class="text-yellow-400 text-sm font-bold mb-2"> الهجمات:</p>
                   <div class="space-y-1">
                     <div v-for="(attack, i) in member.attacks" :key="i" class="text-white text-sm flex justify-between items-center">
-                      <span>على {{ attack.defenderTag }}</span>
+                      <span>#{{ getPlayerMapPosition(attack.defenderTag) }} {{ getPlayerName(attack.defenderTag) }}</span>
                       <span class="font-bold text-yellow-300">⭐{{ attack.stars }} | 💥 {{ attack.destructionPercentage }}%</span>
                     </div>
                   </div>
@@ -127,7 +139,8 @@
                 <div v-if="member.bestOpponentAttack" class="bg-red-900 bg-opacity-40 rounded-lg p-3">
                   <p class="text-red-300 text-sm font-bold mb-1">🛡️ أفضل هجوم ضده:</p>
                   <div class="text-white text-sm flex justify-between items-center">
-                    <span>من {{ member.bestOpponentAttack.attackerTag }}</span>
+
+                    <span>#{{ getPlayerMapPosition(member.bestOpponentAttack.attackerTag) }} {{ getPlayerName(member.bestOpponentAttack.attackerTag) }}</span>
                     <span class="font-bold text-red-400">⭐{{ member.bestOpponentAttack.stars }} | 💥 {{ member.bestOpponentAttack.destructionPercentage }}%</span>
                   </div>
                 </div>
@@ -168,7 +181,7 @@
                   <p class="text-yellow-400 text-sm font-bold mb-2"> الهجمات:</p>
                   <div class="space-y-1">
                     <div v-for="(attack, i) in member.attacks" :key="i" class="text-white text-sm flex justify-between items-center">
-                      <span>على {{ attack.defenderTag }}</span>
+                      <span>#{{ getPlayerMapPosition(attack.defenderTag) }} {{ getPlayerName(attack.defenderTag) }}</span>
                       <span class="font-bold text-yellow-300">⭐{{ attack.stars }} | 💥 {{ attack.destructionPercentage }}%</span>
                     </div>
                   </div>
@@ -178,7 +191,7 @@
                 <div v-if="member.bestOpponentAttack" class="bg-blue-900 bg-opacity-40 rounded-lg p-3">
                   <p class="text-blue-300 text-sm font-bold mb-1">🛡️ أفضل هجوم ضده:</p>
                   <div class="text-white text-sm flex justify-between items-center">
-                    <span>من {{ member.bestOpponentAttack.attackerTag }}</span>
+                    <span>#{{ getPlayerMapPosition(member.bestOpponentAttack.attackerTag) }} {{ getPlayerName(member.bestOpponentAttack.attackerTag) }}</span>
                     <span class="font-bold text-blue-400">⭐{{ member.bestOpponentAttack.stars }} | 💥 {{ member.bestOpponentAttack.destructionPercentage }}%</span>
                   </div>
                 </div>
@@ -188,6 +201,7 @@
         </div>
 
         <!-- Town Hall Lineup Comparison -->
+
         <div class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 rounded-2xl p-6 shadow-2xl border-4 border-yellow-500">
           <h3 class="text-2xl font-black text-yellow-400 mb-6 text-center">🏰 ({{ war.teamSize }} vs {{ war.teamSize }})</h3>
 
@@ -197,7 +211,7 @@
               <img :src="war.clan.badgeUrls.small" class="w-8 h-8" />
               <h4 class="text-blue-300 font-bold">{{ war.clan.name }}</h4>
             </div>
-            <div class="flex overflow-x-auto pb-4 gap-1 custom-scrollbar">
+            <div class="flex pb-4 gap-1 flex-wrap">
               <div
                 v-for="i in war.teamSize"
                 :key="'clan-' + i"
@@ -225,7 +239,7 @@
               <img :src="war.opponent.badgeUrls.small" class="w-8 h-8" />
               <h4 class="text-red-300 font-bold">{{ war.opponent.name }}</h4>
             </div>
-            <div class="flex overflow-x-auto pb-4 gap-1 custom-scrollbar">
+            <div class="flex  pb-4 gap-1 flex-wrap">
               <div
                 v-for="i in war.teamSize"
                 :key="'opp-' + i"
@@ -325,6 +339,37 @@ const getTownhallImage = (level) => {
 }
 const getMemberAt = (members, position) => {
   return members?.find(m => m.mapPosition === position)
+}
+
+// Helper function to get player name from tag
+const getPlayerName = (tag) => {
+  if (!war.value) return tag
+
+  // Search in clan members
+  const clanMember = war.value.clan?.members?.find(m => m.tag === tag)
+  if (clanMember) return clanMember.name
+
+  // Search in opponent members
+  const opponentMember = war.value.opponent?.members?.find(m => m.tag === tag)
+  if (opponentMember) return opponentMember.name
+
+  // If not found, return the tag
+  return tag
+}
+
+// Helper function to get player map position from tag
+const getPlayerMapPosition = (tag) => {
+  if (!war.value) return '?'
+
+  // Search in clan members
+  const clanMember = war.value.clan?.members?.find(m => m.tag === tag)
+  if (clanMember) return clanMember.mapPosition
+
+  // Search in opponent members
+  const opponentMember = war.value.opponent?.members?.find(m => m.tag === tag)
+  if (opponentMember) return opponentMember.mapPosition
+
+  return '?'
 }
 </script>
 

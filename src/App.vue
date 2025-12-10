@@ -1,16 +1,11 @@
 <template>
-    <header class="bg-gray-100 border-b p-4 flex gap-4 text-sm font-semibold">
-    <router-link to="/clan" class="text-blue-600 hover:underline">📋 الكلان</router-link>
-    <router-link to="/ClanCWL" class="text-blue-600 hover:underline">⚔️ CWL الكلان</router-link>
-    <router-link to="/player/%23YOURTAG" class="text-blue-600 hover:underline">👤 لاعب (Tag)</router-link>
-    <router-link to="/cwl/war/YOURWARTAG" class="text-blue-600 hover:underline">🗡️ تفاصيل حرب CWL</router-link>
-        <router-link to="/test" class="text-blue-600 hover:underline">Test</router-link>
-  </header>
+  <AppHeader />
   <div>
     <router-view />
   </div>
 </template>
 <script setup>
+import AppHeader from './components/AppHeader.vue'
 </script>
 <style scoped>
 .logo {

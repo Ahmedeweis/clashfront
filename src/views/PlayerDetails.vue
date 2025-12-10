@@ -140,10 +140,15 @@
       </div>
     </div>
     <!-- Troops -->
+
     <div v-if="player.troops && player.troops.length > 0" class="bg-white p-5 rounded-lg shadow-md border">
       <h2 class="text-xl font-semibold text-red-700 border-b pb-2">⚔️ Troops</h2>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-3">
         <div v-for="troop in player.troops" :key="troop.name" class="text-center p-2 bg-gray-50 rounded text-sm">
+         <img :src="getTroopImageUrl(troop.name) || '/Clans/troops/default.png'"
+               :alt="troop.name"
+               class="w-12 h-12 object-cover rounded transition-transform duration-300 group-hover:scale-125"
+               :class="{ 'opacity-90 grayscale': troop.level === 0 }" />
           <span class="font-medium">{{ troop.name }}</span>
           <p class="text-green-600">Lvl {{ troop.level }} / {{ troop.maxLevel }}</p>
           <p v-if="troop.superTroopIsActive" class="text-red-500 text-xs font-bold">ACTIVE</p>
@@ -151,15 +156,31 @@
       </div>
     </div>
     <!-- Spells -->
-    <div v-if="player.spells && player.spells.length > 0" class="bg-white p-5 rounded-lg shadow-md border">
-      <h2 class="text-xl font-semibold text-purple-700 border-b pb-2">🔮 Spells</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-3">
-        <div v-for="spell in player.spells" :key="spell.name" class="text-center p-2 bg-gray-50 rounded text-sm">
-          <span class="font-medium">{{ spell.name }}</span>
-          <p class="text-blue-600">Lvl {{ spell.level }} / {{ spell.maxLevel }}</p>
-        </div>
-      </div>
+<div v-if="player.spells && player.spells.length > 0" class="bg-white p-5 rounded-lg shadow-md border">
+  <h2 class="text-xl font-semibold text-purple-700 border-b pb-2">🔮 Spells</h2>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-3">
+    <div
+      v-for="spell in player.spells"
+      :key="spell.name"
+      class="text-center p-2 bg-gray-50 rounded text-sm"
+    >
+      <!-- ✅ Image -->
+      <img
+        :src="getSpellImageUrl(spell.name)"
+        :alt="spell.name"
+        class="w-12 h-12 mx-auto object-contain mb-1 transition-transform duration-300 hover:scale-125"
+        :class="{ 'opacity-60 grayscale': spell.level === 0 }"
+      />
+
+      <!-- ✅ Name -->
+      <span class="font-medium block">{{ spell.name }}</span>
+
+      <!-- ✅ Level -->
+      <p class="text-blue-600">Lvl {{ spell.level }} / {{ spell.maxLevel }}</p>
     </div>
+  </div>
+</div>
     <!-- Heroes -->
     <!-- Labels -->
     <div v-if="player.labels && player.labels.length > 0" class="bg-white p-5 rounded-lg shadow-md border">
@@ -187,6 +208,9 @@ import { ref, onMounted , computed } from 'vue'
 import { getHeroEquipmentImageUrl } from '../utils/heroEquipmentImages'
 import { heroEquipmentByHero } from '../utils/heroEquipmentByHero'
 import { heroesData } from '../utils/heroesData'
+import { getTroopImageUrl } from "../utils/troopsImage";
+import { getSpellImageUrl } from "../utils/SpellImage";
+
 console.log(heroesData["Barbarian King"])
 import { useRoute } from 'vue-router'
 import axios from 'axios'
