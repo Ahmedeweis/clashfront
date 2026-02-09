@@ -24,28 +24,28 @@
     @click="selectedColor = 'red'"
     :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'red' ? 'bg-red-600 text-white' : 'bg-red-200 text-black']"
   >
-    <span>أحمر</span>
+    <span> Fiery Wars</span>
     <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['red']?.length || 0 }}</span>
   </button>
   <button
     @click="selectedColor = 'green'"
     :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'green' ? 'bg-green-600 text-white' : 'bg-green-200 text-black']"
   >
-    <span>أخضر</span>
+    <span> IRAQ</span>
     <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['green']?.length || 0 }}</span>
   </button>
   <button
     @click="selectedColor = 'yellow'"
     :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'yellow' ? 'bg-yellow-600 text-white' : 'bg-yellow-200 text-black']"
   >
-    <span>أصفر</span>
+    <span> Nokpa land</span>
     <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['yellow']?.length || 0 }}</span>
   </button>
   <button
     @click="selectedColor = 'blue'"
     :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'blue' ? 'bg-blue-600 text-white' : 'bg-blue-200 text-black']"
   >
-    <span>أزرق</span>
+    <span>super</span>
     <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['blue']?.length || 0 }}</span>
   </button>
 <button
@@ -60,9 +60,21 @@
     class="bg-[#1a172b] rounded-xl shadow-lg p-4 border border-purple-800"
   >
     <!-- عنوان الكلان -->
-    <h2 class="text-xl font-bold text-center text-pink-400 mb-4">
+    <h2 class="text-xl font-bold text-center text-pink-400 mb-2">
       {{ c.name }}
     </h2>
+    <!-- زر اختيار الكل -->
+    <button
+      v-if="selectedColor"
+      @click="selectAllClanMembers(c.tag)"
+      :class="['w-full mb-3 px-3 py-2 rounded-lg font-bold text-white transition-all hover:scale-105',
+               selectedColor === 'red' ? 'bg-red-600 hover:bg-red-700' : '',
+               selectedColor === 'green' ? 'bg-green-600 hover:bg-green-700' : '',
+               selectedColor === 'yellow' ? 'bg-yellow-600 hover:bg-yellow-700' : '',
+               selectedColor === 'blue' ? 'bg-blue-600 hover:bg-blue-700' : '']"
+    >
+      ✅ اختيار الكل باللون {{ selectedColor }}
+    </button>
     <!-- جدول الأعضاء -->
     <table class="w-full text-left text-gray-200">
       <thead>
@@ -306,8 +318,8 @@ const downloadExcel = () => {
   const groups = [
     { key: 'red', label: 'Fiery Wars Exllent CWL' },
     { key: 'green', label: 'IRAQ #2nd CWL' },
-    { key: 'yellow', label: 'Botat CWL' },
-    { key: 'blue', label: 'سوبر CWL' }
+    { key: 'yellow', label: 'Nokpa land' },
+    { key: 'blue', label: 'super' }
   ]
 
   let allData = []
@@ -361,10 +373,10 @@ const downloadPDF = () => {
   let finalY = 30
 
   const groups = [
-    { key: 'red',    label: 'Fiery Wars Exllent CWL',    tag: '#2PYCUY8RG',    color: [255, 0, 0] },
-    { key: 'green',  label: 'IRAQ #2nd CWL',             tag: '#QL92PVUC',     color: [0, 128, 0] },
-    { key: 'yellow', label: 'Botat CWL',                 tag: '#2PPCCLUQV',    color: [0, 0, 0] },
-    { key: 'blue',   label: 'سوبر CWL',                  tag: '#2QGU09G0R',    color: [0, 0, 255] }
+    { key: 'red',    label: 'Fiery Wars Exllent CWL',    tag: '#2PYCUY8RG',    color: [220, 38, 38] },   // Red-600
+    { key: 'green',  label: 'IRAQ #2nd CWL',             tag: '#QL92PVUC',     color: [22, 163, 74] },   // Green-600
+    { key: 'yellow', label: 'Nokpa land',                tag: '#2PPCCLUQV',    color: [202, 138, 4] },   // Yellow-600
+    { key: 'blue',   label: 'super',                     tag: '#2QGU09G0R',    color: [37, 99, 235] }    // Blue-600
   ]
 
   groups.forEach(g => {
@@ -409,7 +421,7 @@ const downloadPDF = () => {
         startY: finalY + 10,
         theme: "grid",
         styles: { font: "Cairo-VariableFont_slnt,wght", fontStyle: "normal", halign: "right" },
-        headStyles: { fillColor: g.color, halign: "right", textColor: g.key === 'yellow' ? [0,0,0] : [255,255,255] },
+        headStyles: { fillColor: g.color, halign: "right", textColor: [255, 255, 255] }, // Text white for all with these dark colors
         columnStyles: {
           0: { cellWidth: 10 },   // No
           1: { cellWidth: 50 },   // Name
@@ -460,8 +472,19 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms))
 // صور التاون
 const getTownhallImage = (level) => {
   try {
-    return new URL(`../assets/townhalls/townhall${level}.png`, import.meta.url).href
-  } catch {
+    // قائمة المستويات المتوفرة (6-18)
+    const availableLevels = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+
+    // لو المستوى موجود في القائمة، استخدم الصورة المخصصة
+    if (availableLevels.includes(level)) {
+      return new URL(`../assets/townhalls/townhall${level}.png`, import.meta.url).href
+    }
+
+    // لو المستوى مش موجود (1-5 أو أي رقم غريب)، استخدم الصورة الافتراضية
+    return new URL(`../assets/townhalls/townhall_default.png`, import.meta.url).href
+  } catch (error) {
+    console.warn(`Failed to load townhall image for level ${level}:`, error)
+    // في حالة حدوث أي خطأ، استخدم الصورة الافتراضية
     return new URL(`../assets/townhalls/townhall_default.png`, import.meta.url).href
   }
 }
@@ -551,6 +574,16 @@ const assignColor = (tag) => {
     // لو لون جديد → حط اللون
     playerColors.value[tag] = selectedColor.value
   }
+}
+
+// اختيار جميع أعضاء الكلان باللون المحدد
+const selectAllClanMembers = (clanTag) => {
+  if (!selectedColor.value) return
+
+  const members = getMembersByClan(clanTag)
+  members.forEach(member => {
+    playerColors.value[member.tag] = selectedColor.value
+  })
 }
 // computed لاعبين مختارين فقط
 // نفس الـ computed

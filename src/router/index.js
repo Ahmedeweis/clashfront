@@ -30,6 +30,12 @@ const routes = [
     path: "/all-clans",
     name: "AllClans",
     component: () => import("../views/AllClans.vue"),
+  },
+  {
+    path: "/clan/:clanTag/war-log",
+    name: "ClanWarLog",
+    component: () => import("../views/ClanWarLog.vue"),
+    props: true
   }
 ]
 const router = createRouter({

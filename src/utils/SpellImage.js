@@ -9,7 +9,7 @@ export const getSpellImageUrl = (spellName) => {
         "Freeze Spell": "/Clans/spells/freeze.png",
         "Poison Spell": "/Clans/spells/poison.png",
         "Earthquake Spell": "/Clans/spells/earthquake.png",
-        "Haste Spell": "/Clans/spells/haste.png",
+        "Haste Spell": "/Clans/spells/speedup.png",
         "Clone Spell": "/Clans/spells/Clone Spell.png",
         "Skeleton Spell": "/Clans/spells/Skeleton Spell.png",
         "Bat Spell": "/Clans/spells/Bat Spell.png",

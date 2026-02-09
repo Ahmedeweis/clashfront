@@ -363,13 +363,18 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <!-- 1st Place -->
       <div v-if="sortedAttack[0]" class="order-2 md:order-1">
-        <div class="bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-xl p-6 border-4 border-yellow-400 shadow-2xl transform hover:scale-105 transition-all relative">
+        <div class="group bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-xl p-6 border-4 border-yellow-400 shadow-2xl transform hover:scale-105 transition-all relative">
           <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
             <span class="text-6xl">🥇</span>
           </div>
           <div class="text-center mt-8">
-            <div class="bg-yellow-900 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+            <div class="bg-yellow-900 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 relative group-hover:rotate-6 transition-transform">
               <span class="text-4xl font-black text-white">1</span>
+               <button @click.stop="deletePlayer(sortedAttack[0].name)" class="absolute -right-2 -top-2 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity" title="Delete Player">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
             </div>
             <h4 class="text-xl font-black text-white mb-2">{{ sortedAttack[0].name }}</h4>
             <div class="bg-black bg-opacity-30 rounded-lg p-3 space-y-1">
@@ -380,6 +385,10 @@
                 {{ sortedAttack[0].attackStarsSum }} / {{ warFilter * 3 }}
               </p>
               <p class="text-green-200 text-sm">💥 {{ sortedAttack[0].attackDestructionSum.toFixed(1) }}% / {{ warFilter * 100 }}%</p>
+              <p class="text-white text-sm flex items-center justify-center gap-1 mt-1">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 2.727 1.17a1 1 0 10.788-1.838l-2.25-1.125a3.01 3.01 0 00-.356.257l-2.641 1.131 2.641 1.131a3.01 3.01 0 00.356.257L12 9.051l2.641 1.131a3.01 3.01 0 00.356-.257l4-1.714a1 1 0 11.788 1.838l-7 3a1 1 0 01-.788 0l-7-3a1 1 0 010-1.838l2.727-1.17-2.727-1.17a1 1 0 010-1.838l7-3z" /></svg>
+                 <span class="font-bold">{{ sortedAttack[0].warsPlayed }}</span> <span class="opacity-70">/ {{ warFilter }}</span>
+              </p>
             </div>
           </div>
         </div>
@@ -387,13 +396,18 @@
 
       <!-- 2nd Place -->
       <div v-if="sortedAttack[1]" class="order-1 md:order-2">
-        <div class="bg-gradient-to-br from-gray-400 to-gray-600 rounded-xl p-6 border-4 border-gray-300 shadow-2xl transform hover:scale-105 transition-all relative">
+        <div class="group bg-gradient-to-br from-gray-400 to-gray-600 rounded-xl p-6 border-4 border-gray-300 shadow-2xl transform hover:scale-105 transition-all relative">
           <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
             <span class="text-6xl">🥈</span>
           </div>
           <div class="text-center mt-8">
-            <div class="bg-gray-700 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+            <div class="bg-gray-700 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 relative group-hover:rotate-6 transition-transform">
               <span class="text-4xl font-black text-white">2</span>
+              <button @click.stop="deletePlayer(sortedAttack[1].name)" class="absolute -right-2 -top-2 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity" title="Delete Player">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
             </div>
             <h4 class="text-xl font-black text-white mb-2">{{ sortedAttack[1].name }}</h4>
             <div class="bg-black bg-opacity-30 rounded-lg p-3 space-y-1">
@@ -404,6 +418,10 @@
                 {{ sortedAttack[1].attackStarsSum }} / {{ warFilter * 3 }}
               </p>
               <p class="text-green-200 text-sm">💥 {{ sortedAttack[1].attackDestructionSum.toFixed(1) }}% / {{ warFilter * 100 }}%</p>
+              <p class="text-white text-sm flex items-center justify-center gap-1 mt-1">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 2.727 1.17a1 1 0 10.788-1.838l-2.25-1.125a3.01 3.01 0 00-.356.257l-2.641 1.131 2.641 1.131a3.01 3.01 0 00.356.257L12 9.051l2.641 1.131a3.01 3.01 0 00.356-.257l4-1.714a1 1 0 11.788 1.838l-7 3a1 1 0 01-.788 0l-7-3a1 1 0 010-1.838l2.727-1.17-2.727-1.17a1 1 0 010-1.838l7-3z" /></svg>
+                 <span class="font-bold">{{ sortedAttack[1].warsPlayed }}</span> <span class="opacity-70">/ {{ warFilter }}</span>
+              </p>
             </div>
           </div>
         </div>
@@ -411,13 +429,18 @@
 
       <!-- 3rd Place -->
       <div v-if="sortedAttack[2]" class="order-3">
-        <div class="bg-gradient-to-br from-orange-600 to-orange-800 rounded-xl p-6 border-4 border-orange-400 shadow-2xl transform hover:scale-105 transition-all relative">
+        <div class="group bg-gradient-to-br from-orange-600 to-orange-800 rounded-xl p-6 border-4 border-orange-400 shadow-2xl transform hover:scale-105 transition-all relative">
           <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
             <span class="text-6xl">🥉</span>
           </div>
           <div class="text-center mt-8">
-            <div class="bg-orange-900 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+            <div class="bg-orange-900 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 relative group-hover:rotate-6 transition-transform">
               <span class="text-4xl font-black text-white">3</span>
+               <button @click.stop="deletePlayer(sortedAttack[2].name)" class="absolute -right-2 -top-2 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity" title="Delete Player">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
             </div>
             <h4 class="text-xl font-black text-white mb-2">{{ sortedAttack[2].name }}</h4>
             <div class="bg-black bg-opacity-30 rounded-lg p-3 space-y-1">
@@ -428,6 +451,10 @@
                 {{ sortedAttack[2].attackStarsSum }} / {{ warFilter * 3 }}
               </p>
               <p class="text-green-200 text-sm">💥 {{ sortedAttack[2].attackDestructionSum.toFixed(1) }}% / {{ warFilter * 100 }}%</p>
+              <p class="text-white text-sm flex items-center justify-center gap-1 mt-1">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 2.727 1.17a1 1 0 10.788-1.838l-2.25-1.125a3.01 3.01 0 00-.356.257l-2.641 1.131 2.641 1.131a3.01 3.01 0 00.356.257L12 9.051l2.641 1.131a3.01 3.01 0 00.356-.257l4-1.714a1 1 0 11.788 1.838l-7 3a1 1 0 01-.788 0l-7-3a1 1 0 010-1.838l2.727-1.17-2.727-1.17a1 1 0 010-1.838l7-3z" /></svg>
+                 <span class="font-bold">{{ sortedAttack[2].warsPlayed }}</span> <span class="opacity-70">/ {{ warFilter }}</span>
+              </p>
             </div>
           </div>
         </div>
@@ -445,7 +472,15 @@
           <span class="text-2xl font-black text-yellow-400 bg-green-700 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
             {{ index + 4 }}
           </span>
-          <span class="font-bold text-white text-lg flex-1">{{ player.name }}</span>
+          <div class="flex-1 flex flex-col">
+            <span class="font-bold text-white text-lg leading-tight mb-1">{{ player.name }}</span>
+            <span class="text-xs text-gray-200 font-bold flex items-center gap-1.5 bg-gray-800/80 px-2 py-1 rounded w-fit border border-gray-600 shadow-sm">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                 <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 2.727 1.17a1 1 0 10.788-1.838l-2.25-1.125a3.01 3.01 0 00-.356.257l-2.641 1.131 2.641 1.131a3.01 3.01 0 00.356.257L12 9.051l2.641 1.131a3.01 3.01 0 00.356-.257l4-1.714a1 1 0 11.788 1.838l-7 3a1 1 0 01-.788 0l-7-3a1 1 0 010-1.838l2.727-1.17-2.727-1.17a1 1 0 010-1.838l7-3z" />
+               </svg>
+               <span class="text-yellow-400">{{ player.warsPlayed }}</span> <span class="text-gray-400 font-normal">/</span> {{ warFilter }}
+            </span>
+          </div>
         </div>
 <div style="flex:0.6;">
             <!-- Stars Progress -->
@@ -478,9 +513,14 @@
               class="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all duration-500 shadow-lg"
               :style="{ width: `${(player.attackDestructionSum / (warFilter * 100)) * 100}%` }"
             ></div>
+</div>
           </div>
         </div>
-</div>
+        <button @click.stop="deletePlayer(player.name)" class="text-red-500 hover:text-red-400 p-2 transition-colors self-center" title="Delete Player">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
@@ -498,13 +538,18 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <!-- 1st Place -->
       <div v-if="sortedDefense[0]" class="order-2 md:order-1">
-        <div class="bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-xl p-6 border-4 border-yellow-400 shadow-2xl transform hover:scale-105 transition-all relative">
+        <div class="group bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-xl p-6 border-4 border-yellow-400 shadow-2xl transform hover:scale-105 transition-all relative">
           <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
             <span class="text-6xl">🥇</span>
           </div>
           <div class="text-center mt-8">
-            <div class="bg-yellow-900 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+            <div class="bg-yellow-900 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 relative group-hover:rotate-6 transition-transform">
               <span class="text-4xl font-black text-white">1</span>
+              <button @click.stop="deletePlayer(sortedDefense[0].name)" class="absolute -right-2 -top-2 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity" title="Delete Player">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
             </div>
             <h4 class="text-xl font-black text-white mb-2">{{ sortedDefense[0].name }}</h4>
             <div class="bg-black bg-opacity-30 rounded-lg p-3 space-y-1">
@@ -512,9 +557,14 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.158c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.37 2.455c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L3.644 9.384c-.783-.57-.38-1.81.588-1.81h4.158a1 1 0 00.95-.69l1.286-3.957z" />
                 </svg>
-                {{ sortedDefense[0].defenseStarsSum }} / {{ warFilter * 3 }}
+                {{ sortedDefense[0].defenseStarsSum }} / {{ sortedDefense[0].warsPlayed * 3 }}
               </p>
               <p class="text-blue-200 text-sm">💥 {{ sortedDefense[0].defenseDestructionSum.toFixed(1) }}% / {{ warFilter * 100 }}%</p>
+              <p class="text-white text-sm flex items-center justify-center gap-1 mt-1">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 2.727 1.17a1 1 0 10.788-1.838l-2.25-1.125a3.01 3.01 0 00-.356.257l-2.641 1.131 2.641 1.131a3.01 3.01 0 00.356.257L12 9.051l2.641 1.131a3.01 3.01 0 00.356-.257l4-1.714a1 1 0 11.788 1.838l-7 3a1 1 0 01-.788 0l-7-3a1 1 0 010-1.838l2.727-1.17-2.727-1.17a1 1 0 010-1.838l7-3z" /></svg>
+                 <span class="font-bold">{{ sortedDefense[0].warsPlayed }}</span> <span class="opacity-70">/ {{ warFilter }}</span>
+                 <span class="mr-2 text-green-400 font-bold text-xs" title="Defense Efficiency">({{ sortedDefense[0].defenseEfficiency.toFixed(0) }}%)</span>
+              </p>
             </div>
           </div>
         </div>
@@ -522,13 +572,18 @@
 
       <!-- 2nd Place -->
       <div v-if="sortedDefense[1]" class="order-1 md:order-2">
-        <div class="bg-gradient-to-br from-gray-400 to-gray-600 rounded-xl p-6 border-4 border-gray-300 shadow-2xl transform hover:scale-105 transition-all relative">
+        <div class="group bg-gradient-to-br from-gray-400 to-gray-600 rounded-xl p-6 border-4 border-gray-300 shadow-2xl transform hover:scale-105 transition-all relative">
           <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
             <span class="text-6xl">🥈</span>
           </div>
           <div class="text-center mt-8">
-            <div class="bg-gray-700 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+            <div class="bg-gray-700 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 relative group-hover:rotate-6 transition-transform">
               <span class="text-4xl font-black text-white">2</span>
+              <button @click.stop="deletePlayer(sortedDefense[1].name)" class="absolute -right-2 -top-2 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity" title="Delete Player">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
             </div>
             <h4 class="text-xl font-black text-white mb-2">{{ sortedDefense[1].name }}</h4>
             <div class="bg-black bg-opacity-30 rounded-lg p-3 space-y-1">
@@ -536,9 +591,14 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.158c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.37 2.455c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L3.644 9.384c-.783-.57-.38-1.81.588-1.81h4.158a1 1 0 00.95-.69l1.286-3.957z" />
                 </svg>
-                {{ sortedDefense[1].defenseStarsSum }} / {{ warFilter * 3 }}
+                {{ sortedDefense[1].defenseStarsSum }} / {{ sortedDefense[1].warsPlayed * 3 }}
               </p>
               <p class="text-blue-200 text-sm">💥 {{ sortedDefense[1].defenseDestructionSum.toFixed(1) }}% / {{ warFilter * 100 }}%</p>
+              <p class="text-white text-sm flex items-center justify-center gap-1 mt-1">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 2.727 1.17a1 1 0 10.788-1.838l-2.25-1.125a3.01 3.01 0 00-.356.257l-2.641 1.131 2.641 1.131a3.01 3.01 0 00.356.257L12 9.051l2.641 1.131a3.01 3.01 0 00.356-.257l4-1.714a1 1 0 11.788 1.838l-7 3a1 1 0 01-.788 0l-7-3a1 1 0 010-1.838l2.727-1.17-2.727-1.17a1 1 0 010-1.838l7-3z" /></svg>
+                 <span class="font-bold">{{ sortedDefense[1].warsPlayed }}</span> <span class="opacity-70">/ {{ warFilter }}</span>
+                 <span class="mr-2 text-green-400 font-bold text-xs" title="Defense Efficiency">({{ sortedDefense[1].defenseEfficiency.toFixed(0) }}%)</span>
+              </p>
             </div>
           </div>
         </div>
@@ -546,13 +606,18 @@
 
       <!-- 3rd Place -->
       <div v-if="sortedDefense[2]" class="order-3">
-        <div class="bg-gradient-to-br from-orange-600 to-orange-800 rounded-xl p-6 border-4 border-orange-400 shadow-2xl transform hover:scale-105 transition-all relative">
+        <div class="group bg-gradient-to-br from-orange-600 to-orange-800 rounded-xl p-6 border-4 border-orange-400 shadow-2xl transform hover:scale-105 transition-all relative">
           <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
             <span class="text-6xl">🥉</span>
           </div>
           <div class="text-center mt-8">
-            <div class="bg-orange-900 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+            <div class="bg-orange-900 bg-opacity-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 relative group-hover:rotate-6 transition-transform">
               <span class="text-4xl font-black text-white">3</span>
+               <button @click.stop="deletePlayer(sortedDefense[2].name)" class="absolute -right-2 -top-2 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity" title="Delete Player">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
             </div>
             <h4 class="text-xl font-black text-white mb-2">{{ sortedDefense[2].name }}</h4>
             <div class="bg-black bg-opacity-30 rounded-lg p-3 space-y-1">
@@ -560,9 +625,14 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.158c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.37 2.455c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L3.644 9.384c-.783-.57-.38-1.81.588-1.81h4.158a1 1 0 00.95-.69l1.286-3.957z" />
                 </svg>
-                {{ sortedDefense[2].defenseStarsSum }} / {{ warFilter * 3 }}
+                {{ sortedDefense[2].defenseStarsSum }} / {{ sortedDefense[2].warsPlayed * 3 }}
               </p>
               <p class="text-blue-200 text-sm">💥 {{ sortedDefense[2].defenseDestructionSum.toFixed(1) }}% / {{ warFilter * 100 }}%</p>
+              <p class="text-white text-sm flex items-center justify-center gap-1 mt-1">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 2.727 1.17a1 1 0 10.788-1.838l-2.25-1.125a3.01 3.01 0 00-.356.257l-2.641 1.131 2.641 1.131a3.01 3.01 0 00.356.257L12 9.051l2.641 1.131a3.01 3.01 0 00.356-.257l4-1.714a1 1 0 11.788 1.838l-7 3a1 1 0 01-.788 0l-7-3a1 1 0 010-1.838l2.727-1.17-2.727-1.17a1 1 0 010-1.838l7-3z" /></svg>
+                 <span class="font-bold">{{ sortedDefense[2].warsPlayed }}</span> <span class="opacity-70">/ {{ warFilter }}</span>
+                 <span class="mr-2 text-green-400 font-bold text-xs" title="Defense Efficiency">({{ sortedDefense[2].defenseEfficiency.toFixed(0) }}%)</span>
+              </p>
             </div>
           </div>
         </div>
@@ -580,7 +650,15 @@
           <span class="text-2xl font-black text-yellow-400 bg-blue-700 rounded-lg w-12 h-12 flex items-center justify-center shadow-lg">
             {{ index + 4 }}
           </span>
-          <span class="font-bold text-white text-lg flex-1">{{ player.name }}</span>
+          <div class="flex-1 flex flex-col">
+            <span class="font-bold text-white text-lg leading-tight mb-1">{{ player.name }}</span>
+            <span class="text-xs text-gray-200 font-bold flex items-center gap-1.5 bg-gray-800/80 px-2 py-1 rounded w-fit border border-gray-600 shadow-sm">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                 <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 2.727 1.17a1 1 0 10.788-1.838l-2.25-1.125a3.01 3.01 0 00-.356.257l-2.641 1.131 2.641 1.131a3.01 3.01 0 00.356.257L12 9.051l2.641 1.131a3.01 3.01 0 00.356-.257l4-1.714a1 1 0 11.788 1.838l-7 3a1 1 0 01-.788 0l-7-3a1 1 0 010-1.838l2.727-1.17-2.727-1.17a1 1 0 010-1.838l7-3z" />
+               </svg>
+               <span class="text-yellow-400">{{ player.warsPlayed }}</span> <span class="text-gray-400 font-normal">/</span> {{ warFilter }}
+            </span>
+          </div>
         </div>
 
         <div style="flex:0.6;">
@@ -591,14 +669,14 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.158c.969 0 1.371 1.24.588 1.81l-3.37 2.455a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.37 2.455c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L3.644 9.384c-.783-.57-.38-1.81.588-1.81h4.158a1 1 0 00.95-.69l1.286-3.957z" />
                 </svg>
-                النجوم
+                النجوم <span class="text-green-400 mr-2 text-xs">({{ player.defenseEfficiency.toFixed(0) }}%)</span>
               </span>
-              <span class="text-white font-bold text-sm">{{ player.defenseStarsSum }} / {{ warFilter * 3 }}</span>
+              <span class="text-white font-bold text-sm">{{ player.defenseStarsSum }} / {{ player.warsPlayed * 3 }}</span>
             </div>
             <div class="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
               <div
                 class="bg-gradient-to-r from-yellow-400 to-yellow-600 h-3 rounded-full transition-all duration-500 shadow-lg"
-                :style="{ width: `${(player.defenseStarsSum / (warFilter * 3)) * 100}%` }"
+                :style="{ width: `${(player.defenseStarsSum / (player.warsPlayed * 3)) * 100}%` }"
               ></div>
             </div>
           </div>
@@ -617,6 +695,11 @@
             </div>
           </div>
         </div>
+        <button @click.stop="deletePlayer(player.name)" class="text-red-500 hover:text-red-400 p-2 transition-colors self-center" title="Delete Player">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
@@ -833,6 +916,12 @@ function toggleDefenseSelection(playerName) {
   selectedDefenseMembers.value = new Set(selectedDefenseMembers.value)
 }
 
+const deletePlayer = (playerName) => {
+  if (confirm(`Are you sure you want to delete ${playerName} from the stats?`)) {
+    stats.value = stats.value.filter(p => p.name !== playerName);
+  }
+}
+
 // Get owner info from playersWhatsapp.json by matching player tag
 const getOwnerInfoByTag = (playerTag) => {
   if (!playerTag) return { ownerName: 'غير متوفر', whatsapp: '-' }
@@ -924,52 +1013,7 @@ const exportToPDF = async () => {
     currentY += 10
   }
 
-  // Leaderboard Section
-  doc.setFontSize(14)
-  doc.setTextColor(79, 70, 229)
-  doc.text('Player Rankings', 14, currentY)
-  currentY += 5
 
-  const leaderboardData = sortedByScore.value.map((player, index) => [
-    index + 1,
-    player.name,
-    player.stats.totalScore.toFixed(0),
-    player.stats.attackScore.toFixed(0),
-    player.stats.defenseScore.toFixed(0)
-  ])
-
-  autoTable(doc, {
-    head: [['Rank', 'Player', 'Total Score', 'Attack Score', 'Defense Score']],
-    body: leaderboardData,
-    startY: currentY,
-    theme: 'grid',
-    styles: {
-      font: 'Cairo-VariableFont_slnt,wght',
-      fontSize: 9,
-      halign: 'right'
-    },
-    headStyles: {
-      fillColor: [79, 70, 229],
-      textColor: [255, 255, 255],
-      halign: 'center',
-      fontStyle: 'bold'
-    },
-    columnStyles: {
-      0: { cellWidth: 15, halign: 'center' },
-      1: { cellWidth: 80 },
-      2: { cellWidth: 25, halign: 'center' },
-      3: { cellWidth: 30, halign: 'center' },
-      4: { cellWidth: 30, halign: 'center' }
-    }
-  })
-
-  currentY = doc.lastAutoTable.finalY + 10
-
-  // Check if we need a new page
-  if (currentY > 180) {
-    doc.addPage()
-    currentY = 15
-  }
 
   // Detailed War Statistics
   doc.setFontSize(14)
@@ -1332,7 +1376,10 @@ const exportSelectedMembersPDF = async () => {
     // Title
     doc.setFontSize(22)
     doc.setTextColor(40, 40, 40)
-    doc.text('Bonus Report 12/2025', 105, currentY, { align: 'center' })
+    const now = new Date()
+    const currentMonth = now.getMonth() + 1
+    const currentYear = now.getFullYear()
+    doc.text(`Bonus Report ${currentMonth}/${currentYear}`, 105, currentY, { align: 'center' })
     currentY += 10
 
     doc.setFontSize(14)
@@ -1523,7 +1570,7 @@ const exportSelectedMembersPDF = async () => {
     doc.text(`Total Players: ${attackData.length + defenseData.length}`, 105, footerY + 5, { align: 'center' })
 
     // Save PDF
-    const fileName = `Bonus_Report_12_2025_${clanName.value.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.pdf`
+    const fileName = `Bonus_Report_${currentMonth}_${currentYear}_${clanName.value.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.pdf`
     doc.save(fileName)
 
   } catch (error) {
@@ -1785,17 +1832,37 @@ const sortedDefense = computed(() => {
       const relevantWars = player.wars.slice(0, warFilter.value)
       const defenseStarsSum = relevantWars.reduce((acc, w) => acc + (w.defenseStars ?? 0), 0)
       const defenseDestructionSum = relevantWars.reduce((acc, w) => acc + (w.defenseDestruction ?? 0), 0)
+      const warsPlayed = relevantWars.filter(w => w.inRoster).length
+
+      // Calculate Defense Efficiency
+      // المعادلة: 100% - ( (النجوم المستقبلة / (عدد الحروب × 3)) × 100 )
+      let defenseEfficiency = 0
+      const maxPotentialStars = warsPlayed * 3
+      if (maxPotentialStars > 0) {
+        const concededPercentage = (defenseStarsSum / maxPotentialStars) * 100
+        defenseEfficiency = 100 - concededPercentage
+      } else {
+        defenseEfficiency = -1 // معالجة حالة عدم المشاركة
+      }
+
       return {
         name: player.name,
         defenseStarsSum,
         defenseDestructionSum,
+        warsPlayed,
+        defenseEfficiency
       }
     })
     .sort((a, b) => {
-      // أقل نجوم دفاع أولًا
-      if (a.defenseStarsSum !== b.defenseStarsSum)
-        return a.defenseStarsSum - b.defenseStarsSum
-      // لو نفس النجوم، أقل نسبة دفاع أولًا (يعني أقل نجوم اتجاب منه)
+      // 1. الترتيب حسب كفاءة الدفاع (الأعلى أفضل)
+      if (Math.abs(b.defenseEfficiency - a.defenseEfficiency) > 0.1) {
+        return b.defenseEfficiency - a.defenseEfficiency
+      }
+      // 2. عند تساوي الكفاءة التقريبية، الأفضلية للي لعب حروب أكثر (ثبات المستوى)
+      if (b.warsPlayed !== a.warsPlayed) {
+        return b.warsPlayed - a.warsPlayed
+      }
+      // 3. لو كله زي بعض، الأقل في نسبة الدمار المستقبلة هو الأفضل
       return a.defenseDestructionSum - b.defenseDestructionSum
     })
 })
@@ -1805,10 +1872,12 @@ const sortedAttack = computed(() => {
       const relevantWars = player.wars.slice(0, warFilter.value)
       const attackStarsSum = relevantWars.reduce((acc, w) => acc + (w.attackStars ?? 0), 0)
       const attackDestructionSum = relevantWars.reduce((acc, w) => acc + (w.attackDestruction ?? 0), 0)
+      const warsPlayed = relevantWars.filter(w => w.inRoster).length
       return {
         name: player.name,
         attackStarsSum,
         attackDestructionSum,
+        warsPlayed,
       }
     })
     .sort((a, b) => {
@@ -1823,8 +1892,19 @@ const sortedAttack = computed(() => {
 // Helper function to get Town Hall image
 const getTownhallImage = (level) => {
   try {
-    return new URL(`../assets/townhalls/townhall${level}.png`, import.meta.url).href
-  } catch {
+    // قائمة المستويات المتوفرة (6-18)
+    const availableLevels = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+
+    // لو المستوى موجود في القائمة، استخدم الصورة المخصصة
+    if (availableLevels.includes(level)) {
+      return new URL(`../assets/townhalls/townhall${level}.png`, import.meta.url).href
+    }
+
+    // لو المستوى مش موجود (1-5 أو أي رقم غريب)، استخدم الصورة الافتراضية
+    return new URL(`../assets/townhalls/townhall_default.png`, import.meta.url).href
+  } catch (error) {
+    console.warn(`Failed to load townhall image for level ${level}:`, error)
+    // في حالة حدوث أي خطأ، استخدم الصورة الافتراضية
     return new URL(`../assets/townhalls/townhall_default.png`, import.meta.url).href
   }
 }

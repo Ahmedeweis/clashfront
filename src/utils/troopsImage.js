@@ -61,19 +61,37 @@ export const getTroopImageUrl = (troopName) => {
         "Log Launcher": "/Clans/troops/siege-log-launcher.png",
         "Flame Flinger": "/Clans/troops/siege-catapult.png",
         "Battle Drill": "/Clans/troops/battle-drill.png",
+        "Troop Launcher": "/Clans/troops/Troop Launcher.png",
 
-        // 🟦 Builder Base
-        "Raged Barbarian": "/Clans/troops/elitebarbarian.png",
-        "Sneaky Archer": "/Clans/troops/elitearcher.png",
-        "Boxer Giant": "/Clans/troops/elitegiant.png",
-        "Beta Minion": "/Clans/troops/gargoyle.png",
-        "Bomber": "/Clans/troops/goblin.png",
-        "Cannon Cart": "/Clans/troops/siege-machine-carrier.png",
-        "Night Witch": "/Clans/troops/warlock.png",
-        "Drop Ship": "/Clans/troops/siege-machine-flyer.png",
-        "Power P.E.K.K.A": "/Clans/troops/pekka.png",
-        "Hog Glider": "/Clans/troops/boar-rider.png",
-        "Electrofire Wizard": "/Clans/troops/wizard.png",
+        // 🟦 Builder Base (Night Troops)
+        "Raged Barbarian": "/Clans/Night Trops/barbarian2.png",
+        "Sneaky Archer": "/Clans/Night Trops/archer2.png",
+        "Boxer Giant": "/Clans/Night Trops/giant2.png",
+        "Beta Minion": "/Clans/Night Trops/gargoyle2.png",
+        "Bomber": "/Clans/Night Trops/bomber2.png",
+        "Cannon Cart": "/Clans/Night Trops/moving-cannon.png",
+        "Night Witch": "/Clans/Night Trops/dark-witch.png",
+        "Drop Ship": "/Clans/Night Trops/balloon2.png",
+        "Power P.E.K.K.A": "/Clans/Night Trops/pekka2.png",
+        "Hog Glider": "/Clans/Night Trops/hog-glider.png",
+        "Electrofire Wizard": "/Clans/Night Trops/electrofire-wizard.png",
+        "Baby Dragon": "/Clans/Night Trops/babydragon.png", // Builder Base Baby Dragon
+
+        // 🐾 Hero Pets
+        "L.A.S.S.I": "/Clans/troops/barky.png",
+        "Mighty Yak": "/Clans/troops/bulldozer.png",
+        "Electro Owl": "/Clans/troops/electrowl.png",
+        "Unicorn": "/Clans/troops/unipony.png",
+        "Phoenix": "/Clans/troops/phoenix.png",
+        "Poison Lizard": "/Clans/troops/poison-lizard.png",
+        "Diggy": "/Clans/troops/diggy.png",
+        "Frosty": "/Clans/troops/frosty.png",
+        "Spirit Fox": "/Clans/troops/phase-fennec.png",
+        "Angry Jelly": "/Clans/troops/angry-jelly.png",
+        "Sneezy": "/Clans/troops/Sneezy.png",
+        "Meteor Golem": "/Clans/troops/Meteor Golem.png",
+        "Furnace": "/Clans/troops/Furnace_info.png",
+        "Super Yeti": "/Clans/troops/Super_Yeti_info.png",
     }
 
     return imageMap[troopName] || null

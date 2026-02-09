@@ -24,6 +24,7 @@ export const heroEquipmentByHero = {
     "Haste Vial",
     "Royal Gem",
     "Seeking Shield",
+    "Frost Flake",
   ],
   "Grand Warden": [
     "Eternal Tome",
@@ -40,5 +41,6 @@ export const heroEquipmentByHero = {
     "Dark Crown",
     "Dark Orb",
     "Henchmen Puppet",
+    "Meteor Staff",
   ]
 };
