@@ -47,6 +47,7 @@ export const getHeroEquipmentImageUrl = (equipmentName) => {
     "Stun Blaster": "/Clans/Dragon/Stun_Blaster.png",
     "Rocket Backpack": "/Clans/Dragon/Rocket_Backpack.png",
     "Electro Fangs": "/Clans/Dragon/Electro_Fangs.png",
+    "Revenge Deck": "/Clans/Dragon/Revenge_Deck.png",
   }
   return imageMap[equipmentName]
 }

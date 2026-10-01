@@ -50,5 +50,6 @@ export const heroEquipmentByHero = {
     "Stun Blaster",
     "Rocket Backpack",
     "Electro Fangs",
+    "Revenge Deck",
   ]
 };

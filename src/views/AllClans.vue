@@ -313,12 +313,24 @@ const downloadExcel = () => {
 const downloadPDF = () => {
   const doc = new jsPDF()
 
+  // ── تاريخ الملف (شهر وسنة)
+  const now = new Date()
+  const month = now.getMonth() + 1   // 1-12
+  const year = now.getFullYear()
+  const fileName = `selected-players-${month}-${year}.pdf`
+
   // عنوان رئيسي
   doc.setFont("Cairo-VariableFont_slnt,wght")
   doc.setFontSize(18)
   doc.text("📋  Choosen Players", 105, 15, { align: "center" })
 
-  let finalY = 30
+  // التاريخ داخل الـ PDF (شهر / سنة)
+  doc.setFontSize(11)
+  doc.setTextColor(100, 100, 100)
+  doc.text(`${month} / ${year}`, 105, 22, { align: "center" })
+  doc.setTextColor(0, 0, 0)
+
+  let finalY = 32
 
   const groups = [
     { key: 'red', label: 'Fiery Wars Exllent CWL', tag: '#2PYCUY8RG', color: [220, 38, 38] },   // Red-600
@@ -353,38 +365,43 @@ const downloadPDF = () => {
       const tagWidth = doc.getTextWidth(g.tag)
       doc.link(14, finalY + 1.5, tagWidth, 4, { url: linkUrl })
 
-
-
       doc.setTextColor(0, 0, 0)
 
-      // جدول بدون عمود التاون هول
+      // جدول مع عمود TH + كولوم منفصل للـ tag
       const tableData = players.map((m, i) => [
         i + 1,
+        m.townHallLevel,
         m.name,
         getOwnerName(m.tag),
+        m.tag,              // كولوم Village Tag منفصل
         getWhatsapp(m.tag)
       ])
 
       autoTable(doc, {
-        head: [["No", "Name", "Owner Name", "WhatsApp"]],
+        head: [["No", "TH", "Name", "Owner Name", "Village Tag", "WhatsApp"]],
         body: tableData,
         startY: finalY + 10,
         theme: "grid",
         styles: { font: "Cairo-VariableFont_slnt,wght", fontStyle: "normal", halign: "right" },
-        headStyles: { fillColor: g.color, halign: "right", textColor: [255, 255, 255] }, // Text white for all with these dark colors
+        headStyles: { fillColor: g.color, halign: "right", textColor: [255, 255, 255] },
         columnStyles: {
           0: { cellWidth: 10 },   // No
-          1: { cellWidth: 50 },   // Name
-          2: { cellWidth: 50 },   // Owner Name
-          3: { cellWidth: 50 }    // WhatsApp
+          1: { cellWidth: 10 },   // TH
+          2: { cellWidth: 40 },   // Name
+          3: { cellWidth: 38 },   // Owner Name
+          4: { cellWidth: 30, textColor: [100, 100, 100], fontSize: 8 },   // Village Tag
+          5: { cellWidth: 38 }    // WhatsApp
         },
         didDrawCell: (data) => {
-          if (data.section === 'body' && data.column.index === 3) {
-            const phoneNumber = data.cell.raw
-            if (phoneNumber) {
-              const cleanNumber = phoneNumber.replace(/[^0-9]/g, '')
-              const url = `https://wa.me/${cleanNumber}`
-              doc.link(data.cell.x, data.cell.y, data.cell.width, data.cell.height, { url: url })
+          if (data.section === 'body') {
+            // رابط الواتساب - كولوم 5
+            if (data.column.index === 5) {
+              const phoneNumber = data.cell.raw
+              if (phoneNumber) {
+                const cleanNumber = String(phoneNumber).replace(/[^0-9]/g, '')
+                const url = `https://wa.me/${cleanNumber}`
+                doc.link(data.cell.x, data.cell.y, data.cell.width, data.cell.height, { url: url })
+              }
             }
           }
         }
@@ -394,7 +411,7 @@ const downloadPDF = () => {
     }
   })
 
-  doc.save("selected-players.pdf")
+  doc.save(fileName)
 }
 
 

@@ -1,14 +1,15 @@
 <template>
 
-  <div class="min-h-screen bg-[#0A0918]">
+  <div class="min-h-screen bg-gray-50">
     <!-- Search Section -->
-    <div class="pt-6 pb-2 flex justify-center sticky top-0 z-50 bg-[#0A0918]/95 backdrop-blur-md">
+    <div
+      class="pt-6 pb-2 flex justify-center sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200">
       <div class="relative w-full max-w-xl px-4">
         <input v-model="searchQuery" @keyup.enter="handleSearch" type="text"
           placeholder="ابحث عن كلان (مثال: #2PYCUY8RG)"
-          class="w-full pl-5 pr-28 py-3 rounded-2xl bg-[#15142b] border border-[#2d2b55] text-white placeholder-gray-500 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all shadow-lg" />
+          class="w-full pl-5 pr-28 py-3 rounded-2xl bg-gray-100 border border-gray-300 text-[#0F172A] placeholder-gray-400 focus:outline-none focus:border-[#DC2626] focus:ring-1 focus:ring-[#DC2626] transition-all shadow-sm" />
         <button @click="handleSearch"
-          class="absolute right-5 top-1.5 bottom-1.5 px-6 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:shadow-lg hover:from-purple-500 hover:to-pink-500 transition-all duration-300 transform active:scale-95">
+          class="absolute right-5 top-1.5 bottom-1.5 px-6 rounded-xl bg-[#DC2626] text-white font-bold hover:bg-[#b91c1c] hover:shadow-lg transition-all duration-300 transform active:scale-95">
           بحث
         </button>
       </div>
@@ -16,47 +17,46 @@
 
     <!-- Loading State -->
     <div v-if="loading" class="flex flex-col justify-center items-center min-h-[50vh]">
-      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-pink-500 mb-4"></div>
-      <p class="text-gray-400 animate-pulse">جارٍ تحميل بيانات الكلان...</p>
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#DC2626] mb-4"></div>
+      <p class="text-[#0F172A]/60 animate-pulse">جارٍ تحميل بيانات الكلان...</p>
     </div>
-    <div v-else-if="error" class="text-center text-red-600 font-bold my-10">
+    <div v-else-if="error" class="text-center text-[#DC2626] font-bold my-10">
       حدث خطأ في تحميل بيانات الكلان. حاول مرة أخرى لاحقاً.
     </div>
-    <section v-if="clan" class=" p-8 space-y-10  bg-[#0A0918]">
-      <!-- ✅ شريط الكلانات الأربعة فوق -->
+
+    <section v-if="clan" class="p-8 space-y-10 bg-gray-50">
+      <!-- ✅ شريط الكلانات فوق -->
       <div class="flex flex-wrap justify-center gap-6 mb-10">
-        <div v-for="c in topClans" :key="c.tag" class="cursor-pointer bg-gradient-to-tr from-purple-800 via-pink-600 to-red-500
-           rounded-2xl shadow-xl p-4 flex flex-col items-center w-40 hover:scale-105
-           transition-transform duration-300" @click="loadClan(c.tag)">
+        <div v-for="c in topClans" :key="c.tag"
+          class="cursor-pointer bg-[#0F172A] hover:bg-[#1e293b] rounded-2xl shadow-lg p-4 flex flex-col items-center w-40 hover:scale-105 transition-all duration-300 border border-[#DC2626]/30 hover:border-[#DC2626]"
+          @click="loadClan(c.tag)">
           <img src="/master.png" alt="Clan Badge" class="w-16 h-16 mb-3 drop-shadow-lg" />
-          <h3 class="text-white font-bold text-center truncate">{{ c.name }}</h3>
+          <h3 class="text-white font-bold text-center truncate text-sm">{{ c.name }}</h3>
         </div>
       </div>
+
       <!-- القسم الرئيسي: شعار واسم الكلان -->
-      <div
-        class="  bg-gradient-to-tr from-indigo-900 via-purple-900 to-pink-900 rounded-3xl shadow-2xl text-gray-100 p-4">
-        <router-link to="/all-clans">All Clan</router-link>
-        <!-- شعار الكلان -->
+      <div class="bg-white rounded-3xl shadow-xl border border-gray-200 text-[#0F172A] p-4">
         <div
-          class="flex flex-col md:flex-row items-start gap-12 p-8 bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-xl shadow-lg">
+          class="flex flex-col md:flex-row items-start gap-12 p-8 bg-gradient-to-br from-gray-50 via-white to-red-50 rounded-xl border border-gray-100">
           <!-- العمود الأيسر: البادج + الوسوم -->
           <div class="flex flex-col items-start gap-6 md:w-1/3">
             <!-- صورة البادج -->
             <div
-              class="relative w-44 h-44 flex-shrink-0 rounded-full overflow-hidden border-4 border-pink-500 shadow-xl hover:shadow-pink-600 transition-shadow duration-500"
+              class="relative w-44 h-44 flex-shrink-0 rounded-full overflow-hidden border-4 border-[#DC2626] shadow-xl hover:shadow-red-300 transition-shadow duration-500"
               aria-label="Clan Badge">
               <img :src="clan.badgeUrls.large" alt="Clan Badge"
-                class="w-full h-full object-contain bg-gradient-to-tr from-purple-800 via-pink-600 to-red-500 p-4"
+                class="w-full h-full object-contain bg-gradient-to-tr from-red-50 via-white to-gray-100 p-4"
                 loading="lazy" />
               <div
-                class="absolute inset-0 rounded-full pointer-events-none animate-pulse border-2 border-pink-400 opacity-40">
+                class="absolute inset-0 rounded-full pointer-events-none animate-pulse border-2 border-[#DC2626] opacity-30">
               </div>
             </div>
             <!-- وسم الكلان -->
-            <p class="text-xl font-semibold text-pink-300 flex items-center gap-2">
-              <span class="opacity-80">Tag:</span>
+            <p class="text-lg font-semibold text-[#0F172A] flex items-center gap-2">
+              <span class="opacity-60 text-sm">Tag:</span>
               <span
-                class="inline-block px-4 py-1 rounded-full bg-pink-600 bg-opacity-60 font-mono tracking-wider select-text"
+                class="inline-block px-4 py-1 rounded-full bg-[#DC2626]/10 border border-[#DC2626]/40 font-mono tracking-wider select-text text-[#DC2626] font-bold"
                 title="وسم الكلان">
                 {{ clan.tag }}
               </span>
@@ -65,104 +65,73 @@
             <section v-if="clan.labels?.length" class="w-full">
               <div class="flex flex-wrap justify-start gap-3">
                 <span v-for="label in clan.labels" :key="label.id"
-                  class="flex items-center gap-2 bg-gray-100 px-2 py-1 rounded-lg shadow hover:scale-105 transition-transform">
+                  class="flex items-center gap-2 bg-gray-100 border border-gray-200 px-2 py-1 rounded-lg shadow hover:scale-105 transition-transform">
                   <img :src="label.iconUrls.small" alt="Label icon" class="w-6 h-6" />
                 </span>
               </div>
             </section>
           </div>
+
           <!-- العمود الأيمن: معلومات الكلان -->
-          <div class="flex-1 space-y-10 text-end md:w-2/3">
+          <div class="flex-1 space-y-8 text-end md:w-2/3">
             <!-- اسم الكلان -->
             <h1 class="text-6xl h-[75px] font-extrabold tracking-wide
-             bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400
-             bg-clip-text text-transparent drop-shadow-lg
-             hover:scale-105 transition-transform duration-500
-             cursor-default select-none" title="اسم الكلان">
+              bg-gradient-to-r from-[#DC2626] via-[#b91c1c] to-[#0F172A]
+              bg-clip-text text-transparent drop-shadow-sm
+              hover:scale-105 transition-transform duration-500
+              cursor-default select-none" title="اسم الكلان">
               {{ clan.name }}
             </h1>
             <!-- الدوري -->
-            <section v-if="clan.capitalLeague" class="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500
-             rounded-xl shadow-lg px-6 py-4 text-white text-center w-fit ml-auto">
-              <h2 class="text-2xl font-semibold flex items-center justify-center gap-3">
+            <section v-if="clan.capitalLeague"
+              class="bg-[#0F172A] rounded-xl shadow-lg px-6 py-4 text-white text-center w-fit ml-auto border-l-4 border-[#DC2626]">
+              <h2 class="text-xl font-semibold flex items-center justify-center gap-3">
                 <img src="/master.png" alt="Capital League" class="w-10" />
                 {{ clan.warLeague.name }}
               </h2>
             </section>
-            <!-- متطلبات الانضمام -->
-            <!-- <section
-      v-if="clan.requiredTownhallLevel || clan.requiredTrophies"
-      class="bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-8 text-center border border-white/20"
-    >
-      <h2 class="text-2xl font-semibold mb-6 flex justify-center items-center gap-2 text-pink-300">
-        📌 متطلبات الانضمام
-      </h2>
-      <div class="space-y-3 text-pink-100">
-        <p>
-          مستوى مركز المدينة المطلوب:
-          <span class="font-bold text-yellow-300">{{ clan.requiredTownhallLevel || 'غير محدد' }}</span>
-        </p>
-        <p>
-          عدد الكؤوس المطلوب:
-          <span class="font-bold text-yellow-300">{{ clan.requiredTrophies || 'غير محدد' }}</span>
-        </p>
-      </div>
-    </section> -->
-            <!-- لغة الدردشة -->
-            <!-- <section
-      v-if="clan.chatLanguage"
-      class="bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-8 text-center border border-white/20"
-    >
-      <h2 class="text-2xl font-semibold mb-3 flex justify-center items-center gap-2 text-pink-300">
-        🗣️ لغة الدردشة
-      </h2>
-      <p class="text-lg font-medium text-pink-100">
-        {{ clan.chatLanguage.name }}
-        <span class="text-sm opacity-75">({{ clan.chatLanguage.languageCode }})</span>
-      </p>
-    </section> -->
             <!-- الوصف -->
             <div class="max-w-2xl ml-auto">
-              <p v-if="clan.description" class="text-lg leading-relaxed text-pink-200 whitespace-pre-wrap font-light">
+              <p v-if="clan.description"
+                class="text-lg leading-relaxed text-[#0F172A]/70 whitespace-pre-wrap font-light">
                 {{ clan.description }}
               </p>
-              <p v-else class="text-lg leading-relaxed italic text-pink-400 opacity-75">
+              <p v-else class="text-lg leading-relaxed italic text-gray-400 opacity-75">
                 لا يوجد وصف متوفر لهذا الكلان حاليًا.
               </p>
             </div>
           </div>
         </div>
       </div>
+
       <!-- معلومات الحروب -->
-      <section class="" v-if="clan">
-        <div class="flex justify-between item-center">
+      <section v-if="clan">
+        <div class="flex justify-between items-center flex-wrap gap-6">
           <div class="flex flex-wrap justify-start gap-4">
             <div
-              class="flex flex-col items-center justify-center w-28 h-28 rounded-lg text-white shadow-md bg-gradient-to-br from-pink-400 to-red-500">
-              <span class="text-4xl font-bold">{{ clan.warWinStreak }}</span>
-              <span class="text-sm opacity-90">انتصارات</span>
+              class="flex flex-col items-center justify-center w-28 h-28 rounded-2xl text-white shadow-lg bg-[#DC2626]">
+              <span class="text-4xl font-extrabold">{{ clan.warWinStreak }}</span>
+              <span class="text-sm opacity-90 mt-1">انتصارات</span>
             </div>
             <div
-              class="flex flex-col items-center justify-center w-28 h-28 rounded-lg text-white shadow-md bg-gradient-to-br from-yellow-400 to-pink-400">
-              <span class="text-4xl font-bold">{{ clan.warTies }}</span>
-              <span class="text-sm opacity-90">تعادلات</span>
+              class="flex flex-col items-center justify-center w-28 h-28 rounded-2xl text-white shadow-lg bg-[#0F172A]">
+              <span class="text-4xl font-extrabold">{{ clan.warTies }}</span>
+              <span class="text-sm opacity-90 mt-1">تعادلات</span>
             </div>
             <div
-              class="flex flex-col items-center justify-center w-28 h-28 rounded-lg text-white shadow-md bg-gradient-to-br from-red-500 to-purple-500">
-              <span class="text-4xl font-bold">{{ clan.warLosses }}</span>
-              <span class="text-sm opacity-90">خسائر</span>
+              class="flex flex-col items-center justify-center w-28 h-28 rounded-2xl text-white shadow-lg bg-[#1e293b]">
+              <span class="text-4xl font-extrabold">{{ clan.warLosses }}</span>
+              <span class="text-sm opacity-90 mt-1">خسائر</span>
             </div>
-            <div
-              class="flex flex-col items-center justify-center w-28 h-28 rounded-lg text-white shadow-md bg-gradient-to-br from-purple-600 to-blue-600">
-              <span class="text-2xl font-bold">
-                {{ clan.isWarLogPublic ? '✔' : '✖' }}
-              </span>
-              <span class="text-sm opacity-90">سجل عام</span>
+            <div class="flex flex-col items-center justify-center w-28 h-28 rounded-2xl text-white shadow-lg"
+              :class="clan.isWarLogPublic ? 'bg-[#DC2626]/80' : 'bg-gray-400'">
+              <span class="text-2xl font-bold">{{ clan.isWarLogPublic ? '✔' : '✖' }}</span>
+              <span class="text-sm opacity-90 mt-1">سجل عام</span>
             </div>
           </div>
           <div class="flex items-center justify-center gap-3 mb-8">
-            <h2 class="text-3xl font-extrabold text-white">👥 أعضاء الكلان</h2>
-            <span class="px-4 py-1 bg-purple-800 text-white text-lg font-semibold rounded-full shadow-md">
+            <h2 class="text-3xl font-extrabold text-[#0F172A]">👥 أعضاء الكلان</h2>
+            <span class="px-4 py-1 bg-[#DC2626] text-white text-lg font-bold rounded-full shadow-md">
               {{ clan.members }}/50
             </span>
           </div>
@@ -172,11 +141,15 @@
       <!-- Tabs Navigation -->
       <div class="flex justify-center gap-4 mb-4">
         <button @click="activeTab = 'members'" class="px-6 py-2 rounded-full font-bold transition-all duration-300"
-          :class="activeTab === 'members' ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg scale-105' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'">
+          :class="activeTab === 'members'
+            ? 'bg-[#DC2626] text-white shadow-lg scale-105'
+            : 'bg-white text-[#0F172A] border border-gray-300 hover:border-[#DC2626] hover:text-[#DC2626]'">
           👥 الأعضاء
         </button>
         <button @click="activeTab = 'warlog'" class="px-6 py-2 rounded-full font-bold transition-all duration-300"
-          :class="activeTab === 'warlog' ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg scale-105' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'">
+          :class="activeTab === 'warlog'
+            ? 'bg-[#DC2626] text-white shadow-lg scale-105'
+            : 'bg-white text-[#0F172A] border border-gray-300 hover:border-[#DC2626] hover:text-[#DC2626]'">
           ⚔️ سجل الحروب
         </button>
       </div>
@@ -188,66 +161,60 @@
 
       <!-- أعضاء الكلان -->
       <section v-show="activeTab === 'members'" class="animate-fade-in">
-        <!-- ✅ شريط التاونات فوق -->
-        <div class="flex flex-wrap gap-4 justify-center mb-6">
+        <!-- شريط التاونات -->
+        <div class="flex flex-wrap gap-3 justify-center mb-8">
           <div v-for="(members, townLevel) in groupedMembers" :key="`top-${townLevel}`"
-            class="flex items-center gap-3 bg-gradient-to-r from-gray-800 to-gray-900 px-1 py-3 rounded-xl shadow-lg border border-purple-600 hover:scale-105 transition-transform">
-            <!-- صورة التاون -->
+            class="flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-sm border border-gray-200 hover:border-[#DC2626] hover:scale-105 transition-all">
             <img :src="getTownhallImage(townLevel)" :alt="`Town Hall Level ${townLevel}`"
-              class="w-12 h-12 object-contain drop-shadow-md" />
-            <!-- النصوص -->
-            <div class="flex items-center gap-2 text-yellow-300 font-bold text-lg">
-              <span>لاعب</span>
-              <span class="bg-black/40 px-2 py-0.5 rounded-lg text-white">
-                {{ members.length }}
-              </span>
-            </div>
+              class="w-10 h-10 object-contain" />
+            <span class="bg-[#DC2626] text-white px-2 py-0.5 rounded-lg text-sm font-bold">
+              {{ members.length }}
+            </span>
           </div>
         </div>
-        <!-- ✅ نفس الكود اللي عندك تحت بالظبط (ما لمسناهوش) -->
-        <section v-if="groupedMembers" class="mb-8 flex column-reverse px-4 space-y-10"
+
+        <!-- قائمة الأعضاء -->
+        <section v-if="groupedMembers" class="mb-8 px-4 space-y-10"
           style="display: flex; flex-direction: column-reverse;">
           <div v-for="(members, townLevel) in groupedMembers" :key="townLevel" class="space-y-4">
             <!-- عنوان التاون -->
             <div class="flex items-center gap-4">
               <img :src="getTownhallImage(townLevel)" :alt="`Town Hall Level ${townLevel}`"
                 class="w-16 h-16 object-contain" />
-              <h2 class="text-lg font-semibold text-yellow-300 flex items-center gap-2">
-                <span class="bg-[#222] px-3 py-1 rounded-full shadow-lg">
+              <h2 class="text-lg font-bold text-[#0F172A] flex items-center gap-2">
+                <span
+                  class="bg-[#0F172A] text-white px-4 py-1 rounded-full text-sm shadow-sm border-l-2 border-[#DC2626]">
                   👥 {{ members.length }} لاعب
                 </span>
               </h2>
             </div>
-            <!-- عرض أعضاء التاون -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <!-- كروت الأعضاء -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               <router-link v-for="member in members" :key="member.tag"
                 :to="{ name: 'PlayerDetails', params: { tag: member.tag.replace('#', '') } }"
-                class="block bg-gradient-to-br from-purple-700 via-purple-900 to-black rounded-3xl shadow-2xl p-6 hover:shadow-purple-500 transition duration-300 ease-in-out transform hover:-translate-y-2">
-                <div class="flex items-center gap-4 mb-5 justify-between">
+                class="block bg-white border border-gray-200 rounded-2xl shadow-sm p-5 hover:shadow-md hover:border-[#DC2626]/40 transition duration-300 transform hover:-translate-y-1 group">
+                <div class="flex items-center gap-4 justify-between">
                   <div
-                    class="relative w-20 h-20 rounded-lg overflow-hidden bg-black shadow-inner border-4 border-purple-600">
-                    <img :src="getTownhallImage(member.townHallLevel)" :alt="`Town Hall Level ${member.townHallLevel}`"
-                      class="w-full h-full object-contain" />
+                    class="rounded-xl overflow-hidden bg-gray-50 border-2 border-[#DC2626]/20 group-hover:border-[#DC2626]/60 transition-all p-1">
+                    <img :src="getTownhallImage(member.townHallLevel)" :alt="`TH ${member.townHallLevel}`"
+                      class="w-16 h-16 object-contain" />
                   </div>
                   <div class="flex flex-col items-end flex-grow">
-                    <h3 class="font-extrabold text-2xl text-white truncate drop-shadow-lg" :title="member.name">
+                    <h3 class="font-extrabold text-xl text-[#0F172A] truncate" :title="member.name">
                       {{ member.name }}
                     </h3>
-                    <div class="flex items-center gap-2 mt-2">
-                      <span class="text-white/80 font-semibold text-lg">🏆 {{ member.trophies }}</span>
+                    <div class="flex items-center gap-2 mt-1">
+                      <span class="text-[#0F172A]/60 font-semibold text-base">🏆 {{ member.trophies }}</span>
                     </div>
-                    <h3 class="font-extrabold text-xl text-white truncate drop-shadow-lg" :title="member.name"> {{
-                      member.tag }}</h3>
+                    <span class="font-mono text-sm text-[#DC2626] font-bold mt-1">{{ member.tag }}</span>
                   </div>
                 </div>
               </router-link>
             </div>
           </div>
-
-
         </section>
-      </section> <!-- End of v-show members section -->
-      <!-- دوري القلعة -->
+      </section>
+
       <!-- معلومات عامة (كروت) -->
       <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6" v-if="clan">
         <InfoCard title="المستوى" :value="clan.clanLevel" />
@@ -257,23 +224,26 @@
         <InfoCard title="دوري الحروب" :value="clan.warLeague?.name || 'غير متوفر'" />
         <InfoCard title="الموقع" :value="clan.location?.name || 'غير محدد'" />
       </section>
+
       <!-- قلعة الكلان -->
       <section v-if="clan.clanCapital" class="max-w-5xl mx-auto">
-        <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">🏰 قلعة الكلان</h2>
-        <p class="mb-6 font-medium text-gray-700 text-center">
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-3 text-[#0F172A]">🏰 قلعة الكلان</h2>
+        <p class="mb-6 font-medium text-[#0F172A]/60 text-center">
           مستوى القلعة:
-          <span class="font-bold text-lg">{{ clan.clanCapital.capitalHallLevel }}</span>
+          <span class="font-extrabold text-lg text-[#DC2626]">{{ clan.clanCapital.capitalHallLevel }}</span>
         </p>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
           <div v-for="district in clan.clanCapital.districts" :key="district.id"
-            class="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center">
-            <h3 class="font-semibold text-gray-800 mb-2">{{ district.name }}</h3>
-            <p class="text-gray-500 text-sm">المستوى: {{ district.districtHallLevel }}</p>
+            class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center text-center hover:border-[#DC2626]/40 hover:shadow-md transition">
+            <h3 class="font-bold text-[#0F172A] mb-2">{{ district.name }}</h3>
+            <p class="text-[#DC2626] font-semibold text-sm">المستوى: {{ district.districtHallLevel }}</p>
           </div>
         </div>
       </section>
+
     </section>
   </div>
+
 </template>
 <script setup>
 import { ref, onMounted, computed } from 'vue'

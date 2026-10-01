@@ -37,7 +37,10 @@ const routes = [
     component: () => import("../views/ClanWarLog.vue"),
     props: true
   },
-  
+  {
+    path: '/',
+    redirect: '/clan'
+  },
 
 ]
 const router = createRouter({
