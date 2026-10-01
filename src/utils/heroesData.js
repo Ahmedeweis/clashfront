@@ -7,4 +7,5 @@ export const heroesData = {
   "Minion Prince": "/Clans/Heroes/Battle-Machine.png",
   "Battle Copter":"/Clans/Heroes/battle-copter.png",
   "Battle Machine":"/Clans/Heroes/war-machine.png",
+  "Dragon Duke": "/Clans/Heroes/Dragon_Duke.png"
 }

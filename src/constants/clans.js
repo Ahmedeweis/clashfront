@@ -18,5 +18,20 @@ export const topClans = [
         name: "Super",
         tag: "#2QGU09G0R",
         badge: new URL("../assets/img/master.png", import.meta.url).href
-    }
+    },
+    {
+        name: "Game of thronse",
+        tag: "#YLGG2J9Y",
+        badge: new URL("../assets/img/master.png", import.meta.url).href
+    },
+    {
+        name: "Dark knight",
+        tag: "#Q0LQV9PG",
+        badge: new URL("../assets/img/master.png", import.meta.url).href
+    },
+    // {
+    //     name: "EGY",
+    //     tag: "#2LGV2CLQ2",
+    //     badge: new URL("../assets/img/master.png", import.meta.url).href
+    // }
 ];

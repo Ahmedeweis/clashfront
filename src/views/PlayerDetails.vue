@@ -11,15 +11,12 @@
     <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/10 group">
       <!-- Gradient Animated Background -->
       <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 animate-gradient-x opacity-90"></div>
-
       <!-- Shine Effect -->
       <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out"></div>
       </div>
-
       <!-- Overlay Pattern -->
       <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
-
       <!-- Content -->
       <div class="relative p-8 md:p-12 text-white flex flex-col md:flex-row items-center md:justify-between gap-6">
         <!-- Player Info -->
@@ -37,7 +34,6 @@
              <span class="flex items-center gap-1">⚔️ {{ player.attackWins }} Wins</span>
           </div>
         </div>
-
         <!-- Major Stats Grid -->
         <div class="grid grid-cols-2 gap-4">
           <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 hover:bg-white/20 transition-colors shadow-inner">
@@ -56,12 +52,11 @@
       <!-- Background Ambient Glow -->
       <div class="absolute -top-24 -left-24 w-96 h-96 bg-purple-600/20 rounded-full blur-[100px] pointer-events-none"></div>
       <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-600/20 rounded-full blur-[100px] pointer-events-none"></div>
-
       <h2 class="text-4xl font-black text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-400 drop-shadow-lg tracking-widest uppercase">
         {{ player.name }} 🦸 HEROES & EQUIPMENT
       </h2>
 <div class="flex flex-wrap justify-center w-full gap-4">
-    <div v-for="hero in [...player.heroes].sort((a,b) => b.level - a.level)" :key="hero.name"
+    <div v-for="hero in [...player.heroes].sort((a,b) => b.level - a.level).filter(h => h.name !== 'Battle Machine' && h.name !== 'Battle Copter')" :key="hero.name"
          class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-3xl p-6 flex flex-col items-center shadow-2xl
                 hover:shadow-pink-600 hover:scale-105 transition-all duration-300 transform">
       <!-- Hero Level Badge -->
@@ -115,21 +110,18 @@
       <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out"></div>
       </div>
-
       <div class="flex flex-col md:flex-row items-center gap-6 relative z-10">
         <!-- Clan Badge -->
         <div class="relative">
           <div class="absolute -inset-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-lg opacity-50 text-center"></div>
           <img :src="player.clan.badgeUrls.large" alt="Clan Badge" class="relative w-28 h-28 object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-300" />
         </div>
-
         <!-- Clan Info -->
         <div class="flex-1 text-white text-center md:text-left">
           <h2 class="text-3xl md:text-4xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-300 drop-shadow-lg uppercase tracking-wider">
             🏰 {{ player.clan.name }}
           </h2>
           <p class="text-sm font-mono text-blue-200 mb-4 bg-black/20 inline-block px-3 py-1 rounded-full border border-white/10">{{ player.clan.tag }}</p>
-
           <div>
             <span class="bg-yellow-400/20 backdrop-blur-md px-6 py-2 rounded-xl border border-yellow-400/30 text-yellow-300 font-black text-xl shadow-lg">
               LEVEL {{ player.clan.clanLevel }}
@@ -138,7 +130,6 @@
         </div>
       </div>
     </div>
-
     <!-- Town Hall & Builder Base -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Home Base -->
@@ -147,7 +138,6 @@
         <h2 class="text-3xl font-black mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-lime-300 to-green-300 drop-shadow-lg uppercase tracking-widest">
           🏡 HOME BASE
         </h2>
-
         <div class="space-y-4">
           <!-- Town Hall -->
           <div class="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10">
@@ -157,7 +147,6 @@
               <span class="text-yellow-300 text-sm">⚙️ Weapon: {{ player.townHallWeaponLevel }}</span>
             </div>
           </div>
-
           <!-- League -->
           <div v-if="player.league" class="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10 flex items-center gap-4">
             <img :src="player.league.iconUrls?.medium" alt="League" class="w-16 h-16 drop-shadow-xl" />
@@ -168,21 +157,18 @@
           </div>
         </div>
       </div>
-
       <!-- Builder Base -->
       <div class="bg-gradient-to-br from-orange-900 via-red-800 to-pink-900 p-6 rounded-3xl shadow-2xl border-4 border-orange-500 relative overflow-hidden group">
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-1000"></div>
         <h2 class="text-3xl font-black mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-red-300 drop-shadow-lg uppercase tracking-widest">
           🛠️ BUILDER BASE
         </h2>
-
         <div class="space-y-4">
           <!-- Builder Hall -->
           <div class="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10">
             <p class="text-orange-200 text-sm mb-1">Builder Hall</p>
             <span class="text-white font-black text-2xl">Level {{ player.builderHallLevel }}</span>
           </div>
-
           <!-- Trophies -->
           <div class="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10">
             <p class="text-orange-200 text-sm mb-2">Trophies</p>
@@ -191,7 +177,6 @@
               <span class="text-yellow-300 text-sm">Best: {{ player.bestBuilderBaseTrophies }}</span>
             </div>
           </div>
-
           <!-- League -->
           <div v-if="player.builderBaseLeague" class="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10">
             <p class="text-orange-200 text-sm mb-1">League</p>
@@ -200,14 +185,12 @@
         </div>
       </div>
     </div>
-
     <!-- Legend Statistics -->
     <div v-if="player.legendStatistics" class="bg-gradient-to-br from-yellow-600 via-amber-600 to-orange-600 p-6 rounded-3xl shadow-2xl border-4 border-yellow-400 relative overflow-hidden group">
       <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-1000"></div>
       <h2 class="text-3xl font-black mb-6 text-center text-white drop-shadow-lg uppercase tracking-widest">
         👑 LEGEND STATISTICS
       </h2>
-
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- Current Trophies -->
         <div class="bg-white/20 backdrop-blur-md rounded-xl p-5 border border-white/30 text-center">
@@ -215,14 +198,12 @@
           <p class="text-white font-black text-3xl">{{ player.legendStatistics.legendTrophies }}</p>
           <p class="text-yellow-200 text-xs mt-1">Trophies</p>
         </div>
-
         <!-- Best Season -->
         <div v-if="player.legendStatistics.bestSeason" class="bg-white/20 backdrop-blur-md rounded-xl p-5 border border-white/30 text-center">
           <p class="text-yellow-100 text-sm mb-2">Best Season</p>
           <p class="text-white font-black text-2xl">Rank #{{ player.legendStatistics.bestSeason.rank }}</p>
           <p class="text-yellow-200 text-xs mt-1">{{ player.legendStatistics.bestSeason.trophies }} Trophies</p>
         </div>
-
         <!-- Best Builder -->
         <div v-if="player.legendStatistics.bestBuilderBaseSeason" class="bg-white/20 backdrop-blur-md rounded-xl p-5 border border-white/30 text-center">
           <p class="text-yellow-100 text-sm mb-2">Best Builder</p>
@@ -231,7 +212,6 @@
         </div>
       </div>
     </div>
-
     <!-- Role & Achievements -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Profile -->
@@ -240,18 +220,15 @@
         <h2 class="text-3xl font-black mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-pink-300 drop-shadow-lg uppercase tracking-widest">
           👤 PROFILE
         </h2>
-
         <div class="space-y-3">
           <div class="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10 flex justify-between items-center">
             <span class="text-indigo-200">Role</span>
             <span class="text-white font-bold capitalize">{{ player.role }}</span>
           </div>
-
           <div class="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10 flex justify-between items-center">
             <span class="text-indigo-200">War Preference</span>
             <span class="text-white font-bold">{{ player.warPreference === 'in' ? '⚔️ Fights' : '🛡️ Skips' }}</span>
           </div>
-
           <div class="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10">
             <p class="text-indigo-200 text-sm mb-2">Donations</p>
             <div class="flex justify-between items-center">
@@ -259,27 +236,23 @@
               <span class="text-blue-400 font-bold text-lg">↓ {{ player.donationsReceived }}</span>
             </div>
           </div>
-
           <div class="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10 flex justify-between items-center">
             <span class="text-indigo-200">Clan Capital</span>
             <span class="text-yellow-400 font-bold text-lg">{{ formatNumber(player.clanCapitalContributions) }}</span>
           </div>
         </div>
       </div>
-
       <!-- Achievements -->
       <div class="bg-gradient-to-br from-pink-900 via-rose-800 to-red-900 p-6 rounded-3xl shadow-2xl border-4 border-pink-500 relative overflow-hidden group">
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-1000"></div>
         <h2 class="text-3xl font-black mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-rose-300 drop-shadow-lg uppercase tracking-widest">
           🏆 ACHIEVEMENTS
         </h2>
-
         <div class="space-y-4">
           <div class="bg-black/30 backdrop-blur-md rounded-xl p-6 border border-white/10 text-center">
             <p class="text-pink-200 text-sm mb-2">Total Achievements</p>
             <p class="text-white font-black text-5xl">{{ player.achievements?.length }}</p>
           </div>
-
           <div class="bg-black/30 backdrop-blur-md rounded-xl p-6 border border-white/10 text-center">
             <p class="text-pink-200 text-sm mb-2">Stars Earned</p>
             <p class="text-yellow-400 font-black text-5xl">⭐ {{ player.achievements?.reduce((sum, a) => sum + a.stars, 0) }}</p>
@@ -292,6 +265,9 @@
          class="bg-gradient-to-br from-red-900 via-red-800 to-orange-900 p-8 rounded-3xl shadow-2xl border-4 border-red-600">
       <h2 class="text-4xl font-black text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-red-300 to-pink-300 drop-shadow-lg">
         {{ player.name }} ⚔️ HOME VILLAGE TROOPS
+        <span class="text-2xl block mt-2 text-white/80">
+          (باقي {{ getRemainingUpgrades(player.troops.filter(t => t.village === 'home' && !isSuperTroop(t.name) && !isSiegeMachine(t.name) && !isHeroPet(t.name))) }} ترقية)
+        </span>
       </h2>
       <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3">
         <div v-for="troop in player.troops.filter(t => t.village === 'home' && !isSuperTroop(t.name) && !isSiegeMachine(t.name) && !isHeroPet(t.name))"
@@ -317,12 +293,14 @@
         </div>
       </div>
     </div>
-
     <!-- ⭐ SUPER TROOPS -->
     <div v-if="player.troops && player.troops.filter(t => isSuperTroop(t.name)).length > 0"
          class="bg-gradient-to-br from-yellow-900 via-amber-800 to-orange-800 p-8 rounded-3xl shadow-2xl border-4 border-yellow-600">
       <h2 class="text-4xl font-black text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-amber-300 to-orange-300 drop-shadow-lg">
         {{ player.name }} ⭐ SUPER TROOPS
+        <span class="text-2xl block mt-2 text-white/80">
+          (باقي {{ getRemainingUpgrades(player.troops.filter(t => isSuperTroop(t.name))) }} ترقية)
+        </span>
       </h2>
       <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3">
         <div v-for="troop in player.troops.filter(t => isSuperTroop(t.name))" :key="troop.name"
@@ -350,12 +328,14 @@
         </div>
       </div>
     </div>
-
     <!-- 🏗️ SIEGE MACHINES -->
     <div v-if="player.troops && player.troops.filter(t => isSiegeMachine(t.name)).length > 0"
          class="bg-gradient-to-br from-gray-800 via-gray-700 to-zinc-900 p-8 rounded-3xl shadow-2xl border-4 border-gray-500">
       <h2 class="text-4xl font-black text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-zinc-400 to-slate-200 drop-shadow-lg">
         {{ player.name }} 🏗️ SIEGE MACHINES
+        <span class="text-2xl block mt-2 text-white/80">
+          (باقي {{ getRemainingUpgrades(player.troops.filter(t => isSiegeMachine(t.name))) }} ترقية)
+        </span>
       </h2>
       <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3">
         <div v-for="troop in player.troops.filter(t => isSiegeMachine(t.name))" :key="troop.name"
@@ -380,12 +360,14 @@
         </div>
       </div>
     </div>
-
     <!-- 🐾 HERO PETS -->
     <div v-if="player.troops && player.troops.filter(t => isHeroPet(t.name)).length > 0"
          class="bg-gradient-to-br from-teal-900 via-emerald-800 to-cyan-900 p-8 rounded-3xl shadow-2xl border-4 border-teal-600">
       <h2 class="text-4xl font-black text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-emerald-300 to-cyan-300 drop-shadow-lg">
         {{ player.name }} 🐾 HERO PETS
+        <span class="text-2xl block mt-2 text-white/80">
+          (باقي {{ getRemainingUpgrades(player.troops.filter(t => isHeroPet(t.name))) }} ترقية)
+        </span>
       </h2>
       <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3">
         <div v-for="troop in player.troops.filter(t => isHeroPet(t.name))" :key="troop.name"
@@ -410,12 +392,14 @@
         </div>
       </div>
     </div>
-
     <!-- 🛠️ BUILDER BASE TROOPS -->
     <div v-if="player.troops && player.troops.filter(t => t.village === 'builderBase').length > 0"
          class="bg-gradient-to-br from-orange-900 via-amber-800 to-yellow-900 p-8 rounded-3xl shadow-2xl border-4 border-orange-600">
       <h2 class="text-4xl font-black text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-orange-300 via-yellow-300 to-amber-300 drop-shadow-lg leading-normal">
         🛠️ BUILDER BASE TROOPS
+        <span class="text-2xl block mt-2 text-white/80">
+          (باقي {{ getRemainingUpgrades(player.troops.filter(t => t.village === 'builderBase')) }} ترقية)
+        </span>
       </h2>
       <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3">
         <div v-for="troop in player.troops.filter(t => t.village === 'builderBase')" :key="troop.name"
@@ -440,14 +424,14 @@
         </div>
       </div>
     </div>
-
-
     <!-- Home Village Spells -->
     <div v-if="player.spells && player.spells.filter(s => s.village === 'home').length > 0" class="bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 p-8 rounded-3xl shadow-2xl border-4 border-purple-600">
       <h2 class="text-4xl font-black text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 drop-shadow-lg">
         {{ player.name }} 🔮 HOME VILLAGE SPELLS
+        <span class="text-2xl block mt-2 text-white/80">
+          (باقي {{ getRemainingUpgrades(player.spells.filter(s => s.village === 'home')) }} ترقية)
+        </span>
       </h2>
-
       <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-3">
         <div
           v-for="spell in player.spells.filter(s => s.village === 'home')"
@@ -463,7 +447,6 @@
               {{ spell.level }}/{{ spell.maxLevel }}
             </span>
           </div>
-
           <!-- Spell Image -->
           <div class="flex justify-center items-center h-14 mb-1">
             <img
@@ -473,12 +456,10 @@
               :class="{ 'opacity-50 grayscale': spell.level === 0 }"
             />
           </div>
-
           <!-- Spell Name -->
           <h3 class="text-center text-white font-bold text-[10px] mb-1 truncate group-hover:text-cyan-300 transition-colors">
             {{ spell.name }}
           </h3>
-
           <!-- Progress Bar -->
           <div class="w-full bg-gray-700 rounded-full h-1 overflow-hidden">
             <div
@@ -490,13 +471,14 @@
         </div>
       </div>
     </div>
-
     <!-- Builder Base Spells (if any exist) -->
     <div v-if="player.spells && player.spells.filter(s => s.village === 'builderBase').length > 0" class="bg-gradient-to-br from-cyan-900 via-teal-800 to-emerald-900 p-8 rounded-3xl shadow-2xl border-4 border-cyan-600">
       <h2 class="text-4xl font-black text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-300 drop-shadow-lg">
         🔮 BUILDER BASE SPELLS
+        <span class="text-2xl block mt-2 text-white/80">
+          (باقي {{ getRemainingUpgrades(player.spells.filter(s => s.village === 'builderBase')) }} ترقية)
+        </span>
       </h2>
-
       <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-10 gap-3">
         <div
           v-for="spell in player.spells.filter(s => s.village === 'builderBase')"
@@ -512,7 +494,6 @@
               {{ spell.level }}/{{ spell.maxLevel }}
             </span>
           </div>
-
           <!-- Spell Image -->
           <div class="flex justify-center items-center h-14 mb-1">
             <img
@@ -522,12 +503,10 @@
               :class="{ 'opacity-50 grayscale': spell.level === 0 }"
             />
           </div>
-
           <!-- Spell Name -->
           <h3 class="text-center text-white font-bold text-[10px] mb-1 truncate group-hover:text-cyan-300 transition-colors">
             {{ spell.name }}
           </h3>
-
           <!-- Progress Bar -->
           <div class="w-full bg-gray-700 rounded-full h-1 overflow-hidden">
             <div
@@ -553,7 +532,6 @@
         </div>
       </div>
     </div>
-
     <!-- Player House -->
     <div v-if="player.playerHouse" class="bg-gradient-to-br from-indigo-900 via-blue-900 to-cyan-900 p-6 rounded-3xl shadow-2xl border-4 border-indigo-500">
       <h2 class="text-3xl font-black mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-cyan-300 drop-shadow-lg">
@@ -577,7 +555,6 @@ import { heroEquipmentByHero } from '../utils/heroEquipmentByHero'
 import { heroesData } from '../utils/heroesData'
 import { getTroopImageUrl } from "../utils/troopsImage";
 import { getSpellImageUrl } from "../utils/SpellImage";
-
 console.log(heroesData["Barbarian King"])
 import { useRoute } from 'vue-router'
 import axios from 'axios'
@@ -606,13 +583,14 @@ onMounted(async () => {
 const props = defineProps({
   player: Object,
 })
-
 const defaultEquipmentImage = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' fill='%23374151' rx='8'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='24' fill='%239CA3AF' dy='.3em' text-anchor='middle'%3E?%3C/text%3E%3C/svg%3E";
-
 const handleImageError = (event) => {
   event.target.src = defaultEquipmentImage
 }
-
+const getRemainingUpgrades = (items) => {
+  if (!items) return 0;
+  return items.reduce((sum, item) => sum + (item.maxLevel - item.level), 0);
+};
 // Categories classification
 const isSuperTroop = (name) => {
   const superTroops = [
@@ -623,19 +601,17 @@ const isSuperTroop = (name) => {
   ];
   return superTroops.includes(name);
 };
-
 const isSiegeMachine = (name) => {
   const siegeMachines = [
     "Wall Wrecker", "Battle Blimp", "Stone Slammer", "Siege Barracks",
-    "Log Launcher", "Flame Flinger", "Battle Drill", "Troop Launcher"
+    "Log Launcher", "Flame Flinger", "Battle Drill", "Troop Launcher", "Sky Wagon"
   ];
   return siegeMachines.includes(name);
 };
-
 const isHeroPet = (name) => {
   const heroPets = [
     "L.A.S.S.I", "Electro Owl", "Mighty Yak", "Unicorn", "Frosty", "Diggy",
-    "Poison Lizard", "Phoenix", "Spirit Fox", "Angry Jelly", "Sneezy"
+    "Poison Lizard", "Phoenix", "Spirit Fox", "Angry Jelly", "Sneezy", "Greedy Raven"
   ];
   return heroPets.includes(name);
 };

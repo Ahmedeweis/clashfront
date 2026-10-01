@@ -7,6 +7,7 @@ export const heroEquipmentByHero = {
     "Vampstache",
     "Barbarian Puppet",
     "Snake Bracelet",
+    "Stick Horse",
   ],
   "Archer Queen": [
     "Giant Arrow",
@@ -42,5 +43,12 @@ export const heroEquipmentByHero = {
     "Dark Orb",
     "Henchmen Puppet",
     "Meteor Staff",
+  ],
+  "Dragon Duke": [
+    "Fire Heart",
+    "Flame Blower",
+    "Stun Blaster",
+    "Rocket Backpack",
+    "Electro Fangs",
   ]
 };

@@ -38,7 +38,7 @@
           </div>
         </div> -->
 
-        <!-- Score Cards
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div
             class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-6 shadow-2xl border-4 border-blue-400 transform hover:scale-105 transition-all">
@@ -102,9 +102,9 @@
             </div>
           </div>
         </div>
-        -->
 
-        <!-- Members Section
+
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 shadow-2xl border-4 border-blue-500">
             <h3 class="text-2xl font-black text-blue-400 mb-6 flex items-center gap-2">
@@ -213,7 +213,7 @@
             </div>
           </div>
         </div>
-        -->
+
 
         <!-- Town Hall Lineup Comparison -->
 

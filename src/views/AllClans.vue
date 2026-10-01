@@ -1,173 +1,131 @@
 <template>
   <section class="p-8 bg-[#0A0918] min-h-screen">
-       <div class="flex gap-4 justify-center items-center mt-10">
-  <button
-    @click="downloadPDF"
-    class="px-6 py-3 bg-gradient-to-r from-pink-600 to-purple-700 text-white font-bold rounded-lg shadow-lg hover:scale-105 transition transform hover:shadow-2xl"
-  >
-    📥 تحميل كـ PDF
-  </button>
-  <button
-    @click="downloadExcel"
-    class="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-700 text-white font-bold rounded-lg shadow-lg hover:scale-105 transition transform hover:shadow-2xl"
-  >
-    📊 تحميل كـ Excel
-  </button>
-</div>
-
-<!-- ✅ كومبوننت إدارة الواتساب -->
-
-
-<!-- أزرار اختيار اللون -->
-<div class="flex gap-4 justify-center my-6">
-  <button
-    @click="selectedColor = 'red'"
-    :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'red' ? 'bg-red-600 text-white' : 'bg-red-200 text-black']"
-  >
-    <span> Fiery Wars</span>
-    <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['red']?.length || 0 }}</span>
-  </button>
-  <button
-    @click="selectedColor = 'green'"
-    :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'green' ? 'bg-green-600 text-white' : 'bg-green-200 text-black']"
-  >
-    <span> IRAQ</span>
-    <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['green']?.length || 0 }}</span>
-  </button>
-  <button
-    @click="selectedColor = 'yellow'"
-    :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'yellow' ? 'bg-yellow-600 text-white' : 'bg-yellow-200 text-black']"
-  >
-    <span> Nokpa land</span>
-    <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['yellow']?.length || 0 }}</span>
-  </button>
-  <button
-    @click="selectedColor = 'blue'"
-    :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'blue' ? 'bg-blue-600 text-white' : 'bg-blue-200 text-black']"
-  >
-    <span>super</span>
-    <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['blue']?.length || 0 }}</span>
-  </button>
-<button
-  class="w-4 h-4 bg-gray-400 rounded-full"
-  @click="playerColors[m.tag] = null"
->🧹</button>
-</div>
-<div class="grid md:grid-cols-3 gap-6 ">
-  <div
-    v-for="c in topClans"
-    :key="c.tag"
-    class="bg-[#1a172b] rounded-xl shadow-lg p-4 border border-purple-800"
-  >
-    <!-- عنوان الكلان -->
-    <h2 class="text-xl font-bold text-center text-pink-400 mb-2">
-      {{ c.name }}
-    </h2>
-    <!-- زر اختيار الكل -->
-    <button
-      v-if="selectedColor"
-      @click="selectAllClanMembers(c.tag)"
-      :class="['w-full mb-3 px-3 py-2 rounded-lg font-bold text-white transition-all hover:scale-105',
-               selectedColor === 'red' ? 'bg-red-600 hover:bg-red-700' : '',
-               selectedColor === 'green' ? 'bg-green-600 hover:bg-green-700' : '',
-               selectedColor === 'yellow' ? 'bg-yellow-600 hover:bg-yellow-700' : '',
-               selectedColor === 'blue' ? 'bg-blue-600 hover:bg-blue-700' : '']"
-    >
-      ✅ اختيار الكل باللون {{ selectedColor }}
-    </button>
-    <!-- جدول الأعضاء -->
-    <table class="w-full text-left text-gray-200">
-      <thead>
-        <tr class="border-b border-gray-600">
-          <th class="py-2 px-2">#</th>
-          <th class="py-2 px-2">الاسم</th>
-          <th class="py-2 px-2">#</th>
-          <th class="py-2 px-2">الاسم</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(pair, rowIndex) in chunkMembers(getMembersByClan(c.tag))"
-          :key="rowIndex"
-          class="hover:bg-purple-900/40 transition"
-        >
-          <!-- اللاعب الأول -->
-          <td class="py-2 px-2">{{ pair[0] ? rowIndex * 2 + 1 : '' }}</td>
-          <td
-            class="py-2 px-2 flex items-center gap-2 cursor-pointer rounded"
-            v-if="pair[0]"
-            @click="assignColor(pair[0].tag)"
-            :class="playerColors[pair[0].tag] ? colorClasses[playerColors[pair[0].tag]] : ''"
-          >
-            <img
-              :src="getTownhallImage(pair[0].townHallLevel)"
-              class="w-6 h-6 object-contain"
-            />
-            <span class="truncate">{{ pair[0].name }}</span>
-          </td>
-          <!-- اللاعب الثاني -->
-          <td class="py-2 px-2">{{ pair[1] ? rowIndex * 2 + 2 : '' }}</td>
-          <td
-            class="py-2 px-2 flex items-center gap-2 cursor-pointer rounded"
-            v-if="pair[1]"
-            @click="assignColor(pair[1].tag)"
-            :class="playerColors[pair[1].tag] ? colorClasses[playerColors[pair[1].tag]] : ''"
-          >
-            <img
-              :src="getTownhallImage(pair[1].townHallLevel)"
-              class="w-6 h-6 object-contain"
-            />
-            <span class="truncate">{{ pair[1].name }}</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<!-- ✅ جدول التجميعي تحت -->
-<!-- ✅ جدول تجميعي عمود واحد -->
-<div
-  v-if="Object.keys(selectedPlayers).length"
-  class="mt-16 bg-[#1a172b] p-6 rounded-xl shadow-lg border border-yellow-600"
->
-  <h2 class="text-2xl font-bold text-center text-yellow-400 mb-6">
-    📋 اللاعبين المختارين
-  </h2>
-  <!-- شبكة للألوان -->
-  <div class="grid md:grid-cols-3 gap-6">
-    <div
-      v-for="(players, color) in selectedPlayers"
-      :key="color"
-      class="bg-[#14122b] p-4 rounded-lg shadow-md"
-    >
-      <!-- عنوان لكل لون -->
-      <h3 class="text-lg font-bold mb-2 text-center" :class="colorClasses[color]">
-        🎨 {{ color }}
-      </h3>
-      <table class="w-full text-left text-gray-200">
-        <thead>
-          <tr class="border-b border-gray-600">
-            <th class="py-2 px-2">اللاعبين</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(m, i) in players"
-            :key="m.tag"
-            :class="colorClasses[color]"
-            class="transition"
-          >
-            <td class="py-2 px-2" dir="ltr">
-              {{ i + 1 }} - {{ m.name }} | {{ m.townHallLevel }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="flex gap-4 justify-center items-center mt-10">
+      <button @click="downloadPDF"
+        class="px-6 py-3 bg-gradient-to-r from-pink-600 to-purple-700 text-white font-bold rounded-lg shadow-lg hover:scale-105 transition transform hover:shadow-2xl">
+        📥 تحميل كـ PDF
+      </button>
+      <button @click="downloadExcel"
+        class="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-700 text-white font-bold rounded-lg shadow-lg hover:scale-105 transition transform hover:shadow-2xl">
+        📊 تحميل كـ Excel
+      </button>
     </div>
-  </div>
-</div>
+
+    <!-- ✅ كومبوننت إدارة الواتساب -->
+
+
+    <!-- أزرار اختيار اللون -->
+    <div class="flex gap-4 justify-center my-6">
+      <button @click="selectedColor = 'red'"
+        :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'red' ? 'bg-red-600 text-white' : 'bg-red-200 text-black']">
+        <span> Fiery Wars</span>
+        <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['red']?.length || 0 }}</span>
+      </button>
+      <button @click="selectedColor = 'green'"
+        :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'green' ? 'bg-green-600 text-white' : 'bg-green-200 text-black']">
+        <span> IRAQ</span>
+        <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['green']?.length || 0 }}</span>
+      </button>
+      <button @click="selectedColor = 'yellow'"
+        :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'yellow' ? 'bg-yellow-600 text-white' : 'bg-yellow-200 text-black']">
+        <span> Nokpa land</span>
+        <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['yellow']?.length || 0 }}</span>
+      </button>
+      <button @click="selectedColor = 'blue'"
+        :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'blue' ? 'bg-blue-600 text-white' : 'bg-blue-200 text-black']">
+        <span>super</span>
+        <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['blue']?.length || 0 }}</span>
+      </button>
+      <button @click="selectedColor = 'purple'"
+        :class="['px-4 py-2 rounded font-bold flex flex-col items-center', selectedColor === 'purple' ? 'bg-purple-600 text-white' : 'bg-purple-200 text-black']">
+        <span>Game of thronse</span>
+        <span class="text-sm mt-1 bg-white/20 px-2 rounded-full">{{ selectedPlayers['purple']?.length || 0 }}</span>
+      </button>
+      <button class="w-4 h-4 bg-gray-400 rounded-full" @click="playerColors[m.tag] = null">🧹</button>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 ">
+      <div v-for="c in topClans" :key="c.tag" class="bg-[#1a172b] rounded-xl shadow-lg p-4 border border-purple-800">
+        <!-- عنوان الكلان -->
+        <h2 class="text-xl font-bold text-center text-pink-400 mb-2">
+          {{ c.name }}
+        </h2>
+        <!-- زر اختيار الكل -->
+        <button v-if="selectedColor" @click="selectAllClanMembers(c.tag)" :class="['w-full mb-3 px-3 py-2 rounded-lg font-bold text-white transition-all hover:scale-105',
+          selectedColor === 'red' ? 'bg-red-600 hover:bg-red-700' : '',
+          selectedColor === 'green' ? 'bg-green-600 hover:bg-green-700' : '',
+          selectedColor === 'yellow' ? 'bg-yellow-600 hover:bg-yellow-700' : '',
+          selectedColor === 'blue' ? 'bg-blue-600 hover:bg-blue-700' : '',
+          selectedColor === 'purple' ? 'bg-purple-600 hover:bg-purple-700' : '']">
+          ✅ اختيار الكل باللون {{ selectedColor }}
+        </button>
+        <!-- جدول الأعضاء -->
+        <table class="w-full text-left text-gray-200">
+          <thead>
+            <tr class="border-b border-gray-600">
+              <th class="py-2 px-2">#</th>
+              <th class="py-2 px-2">الاسم</th>
+              <th class="py-2 px-2">#</th>
+              <th class="py-2 px-2">الاسم</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(pair, rowIndex) in chunkMembers(getMembersByClan(c.tag))" :key="rowIndex"
+              class="hover:bg-purple-900/40 transition">
+              <!-- اللاعب الأول -->
+              <td class="py-2 px-2">{{ pair[0] ? rowIndex * 2 + 1 : '' }}</td>
+              <td class="py-2 px-2 flex items-center gap-2 cursor-pointer rounded" v-if="pair[0]"
+                @click="assignColor(pair[0].tag)"
+                :class="playerColors[pair[0].tag] ? colorClasses[playerColors[pair[0].tag]] : ''">
+                <img :src="getTownhallImage(pair[0].townHallLevel)" class="w-6 h-6 object-contain" />
+                <span class="truncate">{{ pair[0].name }}</span>
+              </td>
+              <!-- اللاعب الثاني -->
+              <td class="py-2 px-2">{{ pair[1] ? rowIndex * 2 + 2 : '' }}</td>
+              <td class="py-2 px-2 flex items-center gap-2 cursor-pointer rounded" v-if="pair[1]"
+                @click="assignColor(pair[1].tag)"
+                :class="playerColors[pair[1].tag] ? colorClasses[playerColors[pair[1].tag]] : ''">
+                <img :src="getTownhallImage(pair[1].townHallLevel)" class="w-6 h-6 object-contain" />
+                <span class="truncate">{{ pair[1].name }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- ✅ جدول التجميعي تحت -->
+    <!-- ✅ جدول تجميعي عمود واحد -->
+    <div v-if="Object.keys(selectedPlayers).length"
+      class="mt-16 bg-[#1a172b] p-6 rounded-xl shadow-lg border border-yellow-600">
+      <h2 class="text-2xl font-bold text-center text-yellow-400 mb-6">
+        📋 اللاعبين المختارين
+      </h2>
+      <!-- شبكة للألوان -->
+      <div class="grid md:grid-cols-3 gap-6">
+        <div v-for="(players, color) in selectedPlayers" :key="color" class="bg-[#14122b] p-4 rounded-lg shadow-md">
+          <!-- عنوان لكل لون -->
+          <h3 class="text-lg font-bold mb-2 text-center" :class="colorClasses[color]">
+            🎨 {{ color }}
+          </h3>
+          <table class="w-full text-left text-gray-200">
+            <thead>
+              <tr class="border-b border-gray-600">
+                <th class="py-2 px-2">اللاعبين</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(m, i) in players" :key="m.tag" :class="colorClasses[color]" class="transition">
+                <td class="py-2 px-2" dir="ltr">
+                  {{ i + 1 }} - {{ m.name }} | {{ m.townHallLevel }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
     <!-- العنوان -->
-    <h1 class="text-3xl font-extrabold text-center mb-10 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400">
+    <h1
+      class="text-3xl font-extrabold text-center mb-10 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400">
       👥 جميع الأعضاء
     </h1>
     <!-- التحميل أو الخطأ -->
@@ -180,11 +138,8 @@
     <div v-else>
       <!-- ✅ شريط إحصائيات التاون -->
       <div class="flex flex-wrap justify-center gap-4 mb-10">
-        <div
-          v-for="stat in townhallStats"
-          :key="stat.level"
-          class="flex items-center gap-3 bg-gradient-to-tr from-purple-700 via-pink-600 to-red-500 px-5 py-3 rounded-2xl shadow-lg hover:scale-105 transition"
-        >
+        <div v-for="stat in townhallStats" :key="stat.level"
+          class="flex items-center gap-3 bg-gradient-to-tr from-purple-700 via-pink-600 to-red-500 px-5 py-3 rounded-2xl shadow-lg hover:scale-105 transition">
           <img :src="getTownhallImage(stat.level)" class="w-12 h-12 object-contain drop-shadow-md" />
           <div class="text-white font-semibold text-lg flex items-center gap-2">
             <!-- تاون {{ stat.level }} -->
@@ -194,33 +149,29 @@
       </div>
       <!-- ✅ شبكة الأعضاء -->
       <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-<div
-  v-for="m in sortedMembers"
-  :key="m.tag"
-  @click="$router.push({ name: 'PlayerDetails', params: { tag: m.tag.replace('#', '') } })"
-  class="cursor-pointer bg-gradient-to-br from-purple-700 via-purple-900 to-black rounded-xl p-4 shadow-lg hover:scale-105 transition"
->
-  <div class="flex items-center gap-3 mb-2">
-    <img :src="getTownhallImage(m.townHallLevel)" class="w-10 h-10 object-contain" />
-    <h4 class="text-lg font-bold text-white truncate">{{ m.name }}</h4>
-  </div>
-  <p class="text-sm text-gray-300">🏆 {{ m.trophies }}</p>
-  <p class="text-xs text-gray-400">Tag: {{ m.tag }}</p>
-  <p class="text-xs text-pink-400">Clan: {{ m.clan?.name }}</p>
-</div>
+        <div v-for="m in sortedMembers" :key="m.tag"
+          @click="$router.push({ name: 'PlayerDetails', params: { tag: m.tag.replace('#', '') } })"
+          class="cursor-pointer bg-gradient-to-br from-purple-700 via-purple-900 to-black rounded-xl p-4 shadow-lg hover:scale-105 transition">
+          <div class="flex items-center gap-3 mb-2">
+            <img :src="getTownhallImage(m.townHallLevel)" class="w-10 h-10 object-contain" />
+            <h4 class="text-lg font-bold text-white truncate">{{ m.name }}</h4>
+          </div>
+          <p class="text-sm text-gray-300">🏆 {{ m.trophies }}</p>
+          <p class="text-xs text-gray-400">Tag: {{ m.tag }}</p>
+          <p class="text-xs text-pink-400">Clan: {{ m.clan?.name }}</p>
+        </div>
       </div>
     </div>
 
     <!-- ✅ قسم Player IDs -->
-    <div class="mt-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-8 rounded-2xl shadow-2xl border border-purple-500">
+    <div
+      class="mt-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-8 rounded-2xl shadow-2xl border border-purple-500">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-400">
           🆔 معرفات اللاعبين
         </h2>
-        <button
-          @click="downloadPlayerIDsPDF"
-          class="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:scale-105 transition transform hover:shadow-2xl"
-        >
+        <button @click="downloadPlayerIDsPDF"
+          class="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:scale-105 transition transform hover:shadow-2xl">
           📥 تحميل IDs كـ PDF
         </button>
       </div>
@@ -228,11 +179,7 @@
       <!-- جدول IDs -->
       <div class="bg-black/30 rounded-xl p-6 backdrop-blur-sm">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div
-            v-for="m in sortedMembers"
-            :key="m.tag"
-            class=" p-4 rounded-lg border bg-white"
-          >
+          <div v-for="m in sortedMembers" :key="m.tag" class=" p-4 rounded-lg border bg-white">
             <div class="flex items-center justify-between gap-3">
               <div class="flex items-center gap-3 flex-1 min-w-0">
                 <img :src="getTownhallImage(m.townHallLevel)" class="w-8 h-8 object-contain flex-shrink-0" />
@@ -319,7 +266,8 @@ const downloadExcel = () => {
     { key: 'red', label: 'Fiery Wars Exllent CWL' },
     { key: 'green', label: 'IRAQ #2nd CWL' },
     { key: 'yellow', label: 'Nokpa land' },
-    { key: 'blue', label: 'super' }
+    { key: 'blue', label: 'super' },
+    { key: 'purple', label: 'Game of thronse' }
   ]
 
   let allData = []
@@ -373,10 +321,12 @@ const downloadPDF = () => {
   let finalY = 30
 
   const groups = [
-    { key: 'red',    label: 'Fiery Wars Exllent CWL',    tag: '#2PYCUY8RG',    color: [220, 38, 38] },   // Red-600
-    { key: 'green',  label: 'IRAQ #2nd CWL',             tag: '#QL92PVUC',     color: [22, 163, 74] },   // Green-600
-    { key: 'yellow', label: 'Nokpa land',                tag: '#2PPCCLUQV',    color: [202, 138, 4] },   // Yellow-600
-    { key: 'blue',   label: 'super',                     tag: '#2QGU09G0R',    color: [37, 99, 235] }    // Blue-600
+    { key: 'red', label: 'Fiery Wars Exllent CWL', tag: '#2PYCUY8RG', color: [220, 38, 38] },   // Red-600
+    { key: 'green', label: 'IRAQ #2nd CWL', tag: '#QL92PVUC', color: [22, 163, 74] },   // Green-600
+    { key: 'yellow', label: 'Nokpa land', tag: '#2PPCCLUQV', color: [202, 138, 4] },   // Yellow-600
+    { key: 'blue', label: 'super', tag: '#2QGU09G0R', color: [37, 99, 235] },   // Blue-600
+    { key: 'purple', label: 'Game of thronse', tag: '#YLGG2J9Y', color: [147, 51, 234] },
+    // { key: 'black', label: 'EGY', tag: '#2LGV2CLQ2', color: [10, 10, 100] },
   ]
 
   groups.forEach(g => {
@@ -463,7 +413,8 @@ const topClans = ref([
   { name: "Fiery Wars", tag: "#2PYCUY8RG" },
   { name: "درع العراق", tag: "#QL92PVUC" },
   { name: "ارض النخبة", tag: "#2PPCCLUQV" },
-  { name: "سوبر", tag: "#2QGU09G0R" }
+  { name: "سوبر", tag: "#2QGU09G0R" },
+  { name: "Game of thronse", tag: "#YLGG2J9Y" }
 ])
 const allMembers = ref([])
 const loadingAll = ref(false)
@@ -563,7 +514,8 @@ const colorClasses = {
   red: "bg-red-500/40",
   green: "bg-green-500/40",
   yellow: "bg-yellow-400/40",
-  blue: "bg-blue-500/40"
+  blue: "bg-blue-500/40",
+  purple: "bg-purple-500/40"
 }
 // تعيين اللون للاعب
 const assignColor = (tag) => {

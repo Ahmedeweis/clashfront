@@ -36,7 +36,9 @@ const routes = [
     name: "ClanWarLog",
     component: () => import("../views/ClanWarLog.vue"),
     props: true
-  }
+  },
+  
+
 ]
 const router = createRouter({
   history: createWebHistory(),

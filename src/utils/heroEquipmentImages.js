@@ -9,6 +9,7 @@ export const getHeroEquipmentImageUrl = (equipmentName) => {
     "Spiky Ball": "/Clans/king/Spiky-Ball.png",
     "Earthquake Boots": "/Clans/king/Earthquake-Boots.png",
     "Snake Bracelet": "/Clans/king/Snake-Bracelet.png",
+    "Stick Horse": "/Clans/king/Stick_Horse.png",
     // Queen
     "Action Figure": "/Clans/Queen/Action-Figure.png",
     "Giant Arrow": "/Clans/Queen/Giant-Arrow.png",
@@ -40,6 +41,12 @@ export const getHeroEquipmentImageUrl = (equipmentName) => {
     "Healing Tome": "/Clans/warden/Healing-Tome.png",
     "Lavaloon Puppet": "/Clans/warden/Lavaloon-Puppet.png",
     "Heroic Torch": "/Clans/warden/Heroic-Torch.png",
+    // Dragon
+    "Fire Heart": "/Clans/Dragon/Fire_Heart.png",
+    "Flame Blower": "/Clans/Dragon/Flame_Blower.png",
+    "Stun Blaster": "/Clans/Dragon/Stun_Blaster.png",
+    "Rocket Backpack": "/Clans/Dragon/Rocket_Backpack.png",
+    "Electro Fangs": "/Clans/Dragon/Electro_Fangs.png",
   }
   return imageMap[equipmentName]
 }

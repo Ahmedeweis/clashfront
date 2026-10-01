@@ -89,9 +89,11 @@ export const getTroopImageUrl = (troopName) => {
         "Spirit Fox": "/Clans/troops/phase-fennec.png",
         "Angry Jelly": "/Clans/troops/angry-jelly.png",
         "Sneezy": "/Clans/troops/Sneezy.png",
+        "Greedy Raven": "/Clans/troops/Greedy_Raven.png",
         "Meteor Golem": "/Clans/troops/Meteor Golem.png",
         "Furnace": "/Clans/troops/Furnace_info.png",
         "Super Yeti": "/Clans/troops/Super_Yeti_info.png",
+        "Sky Wagon": "/Clans/troops/Sky_Wagon_info.png",
     }
 
     return imageMap[troopName] || null
